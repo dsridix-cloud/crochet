@@ -10,7 +10,8 @@ import {
   ArrowRight, 
   Check, 
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  AlertCircle
 } from 'lucide-react';
 
 export const QuickViewModal: React.FC = () => {
@@ -20,7 +21,8 @@ export const QuickViewModal: React.FC = () => {
     addToCart, 
     toggleWishlist, 
     isInWishlist, 
-    navigateTo 
+    navigateTo,
+    showToast
   } = useShop();
 
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
@@ -34,12 +36,32 @@ export const QuickViewModal: React.FC = () => {
   const currentSize = selectedSize || quickViewProduct.sizes?.[0] || 'One Size';
   const isSaved = isInWishlist(quickViewProduct.id);
 
+  const readyToShipQty = quickViewProduct.stock ?? 9;
+  const isQuantityExceeded = quantity > readyToShipQty;
+  const isQuantityInvalid = isQuantityExceeded || quantity <= 0;
+
   const handleAddToCart = () => {
+    if (isQuantityExceeded) {
+      showToast('Quantity Exceeded', 'Quantity cannot be greater than Ready to Ship quantity.', 'error');
+      return;
+    }
+    if (quantity <= 0) {
+      showToast('Invalid Quantity', 'Please enter a valid quantity of 1 or more.', 'error');
+      return;
+    }
     addToCart(quickViewProduct, currentColor, currentSize, quantity);
     closeQuickView();
   };
 
   const handleBuyNow = () => {
+    if (isQuantityExceeded) {
+      showToast('Quantity Exceeded', 'Quantity cannot be greater than Ready to Ship quantity.', 'error');
+      return;
+    }
+    if (quantity <= 0) {
+      showToast('Invalid Quantity', 'Please enter a valid quantity of 1 or more.', 'error');
+      return;
+    }
     addToCart(quickViewProduct, currentColor, currentSize, quantity);
     closeQuickView();
     navigateTo('checkout');
@@ -195,24 +217,74 @@ export const QuickViewModal: React.FC = () => {
                 </div>
               )}
 
-              {/* Quantity */}
-              <div className="flex items-center gap-4 pt-1">
-                <span className="text-xs font-bold text-[#332C28]">Quantity:</span>
-                <div className="flex items-center border border-[#E7DED2] rounded-lg bg-[#F8F4EE]">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-1.5 text-[#332C28] hover:bg-[#E7DED2] rounded-l-lg transition-colors"
-                  >
-                    <Minus className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="px-3.5 text-xs font-bold text-[#332C28]">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="p-1.5 text-[#332C28] hover:bg-[#E7DED2] rounded-r-lg transition-colors"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                  </button>
+              {/* Quantity & Stock Status */}
+              <div className="pt-2 border-t border-[#E7DED2]/60">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-[#332C28]">Quantity:</span>
+                    <div 
+                      className={`flex items-center border rounded-lg transition-all ${
+                        isQuantityExceeded
+                          ? 'border-[#C45A5A] bg-[#FFF0F0] ring-2 ring-[#C45A5A]/30'
+                          : 'border-[#E7DED2] bg-[#F8F4EE]'
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="p-1.5 text-[#332C28] hover:bg-[#E7DED2] rounded-l-lg transition-colors cursor-pointer"
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <input
+                        type="number"
+                        id="quickview-quantity-input"
+                        min="1"
+                        max={readyToShipQty}
+                        value={quantity === 0 ? '' : quantity}
+                        onChange={(e) => {
+                          const val = e.target.value === '' ? 0 : parseInt(e.target.value, 10);
+                          setQuantity(isNaN(val) ? 0 : val);
+                        }}
+                        className={`w-10 sm:w-12 text-center text-xs font-bold bg-transparent focus:outline-none py-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${
+                          isQuantityExceeded ? 'text-[#C45A5A]' : 'text-[#332C28]'
+                        }`}
+                        aria-invalid={isQuantityExceeded}
+                        aria-describedby={isQuantityExceeded ? "quickview-quantity-error-msg" : undefined}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="p-1.5 text-[#332C28] hover:bg-[#E7DED2] rounded-r-lg transition-colors cursor-pointer"
+                        aria-label="Increase quantity"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <span className={`text-xs font-medium flex items-center gap-1 ${
+                    isQuantityExceeded ? 'text-[#C45A5A]' : 'text-[#5B734E]'
+                  }`}>
+                    <span className={`w-2 h-2 rounded-full ${
+                      isQuantityExceeded ? 'bg-[#C45A5A]' : 'bg-[#5B734E] animate-pulse'
+                    }`}></span>
+                    <span>{readyToShipQty} items ready to ship</span>
+                  </span>
                 </div>
+
+                {/* Red warning/error message directly below the Quantity field */}
+                {isQuantityExceeded && (
+                  <div 
+                    id="quickview-quantity-error-msg" 
+                    className="mt-2 flex items-start gap-1.5 text-xs text-[#C45A5A] font-semibold bg-[#FFF0F0] border border-[#C45A5A]/30 p-2 rounded-lg animate-fade-in"
+                    role="alert"
+                  >
+                    <AlertCircle className="w-3.5 h-3.5 text-[#C45A5A] flex-shrink-0 mt-0.5" />
+                    <span>Quantity cannot be greater than Ready to Ship quantity.</span>
+                  </div>
+                )}
               </div>
 
             </div>
@@ -223,7 +295,12 @@ export const QuickViewModal: React.FC = () => {
                 <button
                   id="quickview-add-to-cart"
                   onClick={handleAddToCart}
-                  className="py-3 px-4 rounded-xl bg-[#332C28] hover:bg-[#8C6F5A] text-[#F8F4EE] text-xs font-bold transition-colors shadow-md flex items-center justify-center gap-2"
+                  disabled={isQuantityInvalid}
+                  className={`py-3 px-4 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 ${
+                    isQuantityInvalid
+                      ? 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed shadow-none'
+                      : 'bg-[#332C28] hover:bg-[#8C6F5A] text-[#F8F4EE] cursor-pointer'
+                  }`}
                 >
                   <ShoppingBag className="w-4 h-4 text-[#D9A7A0]" />
                   <span>Add to Bag</span>
@@ -232,7 +309,12 @@ export const QuickViewModal: React.FC = () => {
                 <button
                   id="quickview-buy-now"
                   onClick={handleBuyNow}
-                  className="py-3 px-4 rounded-xl bg-[#8C6F5A] hover:bg-[#725743] text-white text-xs font-bold transition-colors shadow-md flex items-center justify-center gap-1.5"
+                  disabled={isQuantityInvalid}
+                  className={`py-3 px-4 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 ${
+                    isQuantityInvalid
+                      ? 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed shadow-none'
+                      : 'bg-[#8C6F5A] hover:bg-[#725743] text-white cursor-pointer'
+                  }`}
                 >
                   <span>Buy Now</span>
                   <ArrowRight className="w-4 h-4" />

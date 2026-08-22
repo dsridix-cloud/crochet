@@ -23,6 +23,8 @@ export const PaymentPage: React.FC = () => {
     cartSubtotal, 
     appliedCoupon, 
     shippingAddress, 
+    isLoggedIn,
+    savedAddresses,
     placeOrder, 
     navigateTo,
     showToast 
@@ -50,6 +52,40 @@ export const PaymentPage: React.FC = () => {
 
   // Loading state for demo submit
   const [isProcessing, setIsProcessing] = useState(false);
+
+  // Guard 1: Logged Out Protection
+  if (!isLoggedIn) {
+    return (
+      <div className="max-w-md mx-auto my-16 p-8 bg-white rounded-2xl border border-[#E7DED2] text-center shadow-xs">
+        <Lock className="w-10 h-10 text-[#8C6F5A] mx-auto mb-3" />
+        <h2 className="font-serif-heading text-xl font-bold text-[#332C28]">Sign In Required</h2>
+        <p className="text-xs text-[#332C28]/70 mt-2 mb-6">Please sign in to your account to complete payment and place your order.</p>
+        <button
+          onClick={() => navigateTo('login')}
+          className="w-full py-3 bg-[#8C6F5A] text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-[#735A48] transition-colors cursor-pointer"
+        >
+          Sign In to Continue
+        </button>
+      </div>
+    );
+  }
+
+  // Guard 2: Missing Delivery Address Protection
+  if (!shippingAddress.addressLine1 || (savedAddresses.length === 0 && !shippingAddress.fullName)) {
+    return (
+      <div className="max-w-md mx-auto my-16 p-8 bg-white rounded-2xl border border-[#E7DED2] text-center shadow-xs">
+        <Truck className="w-10 h-10 text-[#8C6F5A] mx-auto mb-3" />
+        <h2 className="font-serif-heading text-xl font-bold text-[#332C28]">Delivery Address Required</h2>
+        <p className="text-xs text-[#332C28]/70 mt-2 mb-6">Please provide a valid delivery address before proceeding with payment.</p>
+        <button
+          onClick={() => navigateTo('checkout')}
+          className="w-full py-3 bg-[#8C6F5A] text-white rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-[#735A48] transition-colors cursor-pointer"
+        >
+          Add Delivery Address
+        </button>
+      </div>
+    );
+  }
 
   // If cart is empty and no checkout info, redirect
   if (cart.length === 0) {
@@ -592,7 +628,7 @@ export const PaymentPage: React.FC = () => {
             </button>
             <p className="text-center text-[11px] text-[#332C28]/60 mt-2.5 flex items-center justify-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#AAB5A0]" />
-              <span>Safe 256-Bit SSL Demo Checkout • No Actual Charges</span>
+              <span>Safe Encrypted Demo Checkout • No Actual Charges</span>
             </p>
           </div>
 

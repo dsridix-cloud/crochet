@@ -10,6 +10,12 @@ export const CATEGORIES_DATA = [
     image: 'https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=800&q=80',
     bannerImage: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=80',
     count: 6,
+    subCategories: [
+      { id: 'halter-tops', name: 'Halter Tops & Corsets' },
+      { id: 'bralettes', name: 'Bralettes & Crop Tops' },
+      { id: 'cardigans-vests', name: 'Cardigans & Vests' },
+      { id: 'scalloped-tops', name: 'Scalloped Summer Tops' },
+    ]
   },
   {
     id: 'bags',
@@ -20,6 +26,12 @@ export const CATEGORIES_DATA = [
     image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=800&q=80',
     bannerImage: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80',
     count: 7,
+    subCategories: [
+      { id: 'tote-bags', name: 'Artisanal Tote Bags' },
+      { id: 'shoulder-bags', name: 'Shoulder Bags' },
+      { id: 'crossbody-pouches', name: 'Crossbody Pouches' },
+      { id: 'mini-purses', name: 'Mini Purses & Clutches' },
+    ]
   },
   {
     id: 'toys',
@@ -30,6 +42,12 @@ export const CATEGORIES_DATA = [
     image: 'https://images.unsplash.com/photo-1559454403-b8fb88521f11?auto=format&fit=crop&w=800&q=80',
     bannerImage: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=1600&q=80',
     count: 5,
+    subCategories: [
+      { id: 'amigurumi-animals', name: 'Amigurumi Plush Animals' },
+      { id: 'plush-companions', name: 'Plush Doll Companions' },
+      { id: 'keychain-buddies', name: 'Keychain Plush Buddies' },
+      { id: 'baby-rattles', name: 'Soft Nursery Rattles' },
+    ]
   },
   {
     id: 'home-decor',
@@ -40,6 +58,12 @@ export const CATEGORIES_DATA = [
     image: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80',
     bannerImage: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1600&q=80',
     count: 5,
+    subCategories: [
+      { id: 'coaster-sets', name: 'Floral Coaster Sets' },
+      { id: 'plant-hangers', name: 'Artisanal Plant Hangers' },
+      { id: 'wall-tapestries', name: 'Wall Tapestries & Hangings' },
+      { id: 'table-runners', name: 'Table Runners & Mats' },
+    ]
   },
   {
     id: 'gifts',
@@ -50,6 +74,12 @@ export const CATEGORIES_DATA = [
     image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
     bannerImage: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1600&q=80',
     count: 4,
+    subCategories: [
+      { id: 'forever-bouquets', name: 'Forever Flower Bouquets' },
+      { id: 'hair-accessories', name: 'Hair Scrunchies & Clips' },
+      { id: 'keychain-charms', name: 'Keychain Charms & Tokens' },
+      { id: 'gift-boxes', name: 'Curated Gift Sets' },
+    ]
   },
 ];
 

@@ -20,23 +20,65 @@ export const CheckoutPage: React.FC = () => {
     appliedCoupon, 
     shippingAddress,
     setShippingAddress,
+    isLoggedIn,
+    user,
+    savedAddresses,
+    addSavedAddress,
     navigateTo, 
     showToast 
   } = useShop();
 
-  const [formData, setFormData] = useState({
-    email: shippingAddress.email || 'ananya.sharma@example.com',
-    phone: shippingAddress.phone || '+91 98765 43210',
-    firstName: shippingAddress.fullName ? shippingAddress.fullName.split(' ')[0] : 'Ananya',
-    lastName: shippingAddress.fullName ? shippingAddress.fullName.split(' ').slice(1).join(' ') : 'Sharma',
-    address: shippingAddress.addressLine1 || '42, Lotus Boulevard, C-Scheme',
-    apartment: shippingAddress.addressLine2 || 'Flat 4B',
-    city: shippingAddress.city || 'Jaipur',
-    state: shippingAddress.state || 'Rajasthan',
-    pinCode: shippingAddress.pincode || '302001'
+  const [selectedAddressId, setSelectedAddressId] = useState<string>(() => {
+    const defaultAddr = savedAddresses.find(a => a.isDefault) || savedAddresses[0];
+    return defaultAddr ? defaultAddr.id : 'new';
+  });
+
+  const [formData, setFormData] = useState(() => {
+    const defaultAddr = savedAddresses.find(a => a.isDefault) || savedAddresses[0];
+    if (defaultAddr) {
+      const parts = defaultAddr.fullName.split(' ');
+      return {
+        email: user?.email || 'priya@example.com',
+        phone: defaultAddr.phone || user?.phone || '+91 98765 43210',
+        firstName: parts[0] || 'Priya',
+        lastName: parts.slice(1).join(' ') || 'Sharma',
+        address: defaultAddr.addressLine1,
+        apartment: defaultAddr.addressLine2 || '',
+        city: defaultAddr.city,
+        state: defaultAddr.state,
+        pinCode: defaultAddr.pincode
+      };
+    }
+    return {
+      email: user?.email || shippingAddress.email || 'priya@example.com',
+      phone: shippingAddress.phone || user?.phone || '+91 98765 43210',
+      firstName: user?.firstName || (shippingAddress.fullName ? shippingAddress.fullName.split(' ')[0] : 'Priya'),
+      lastName: user?.lastName || (shippingAddress.fullName ? shippingAddress.fullName.split(' ').slice(1).join(' ') : 'Sharma'),
+      address: shippingAddress.addressLine1 || '',
+      apartment: shippingAddress.addressLine2 || '',
+      city: shippingAddress.city || '',
+      state: shippingAddress.state || 'Rajasthan',
+      pinCode: shippingAddress.pincode || ''
+    };
   });
 
   const [shippingMethod, setShippingMethod] = useState<'standard' | 'express'>(shippingAddress.deliveryMethod || 'standard');
+
+  const selectSavedAddress = (addr: typeof savedAddresses[0]) => {
+    setSelectedAddressId(addr.id);
+    const parts = addr.fullName.split(' ');
+    setFormData({
+      email: user?.email || 'priya@example.com',
+      phone: addr.phone,
+      firstName: parts[0] || 'Priya',
+      lastName: parts.slice(1).join(' ') || 'Sharma',
+      address: addr.addressLine1,
+      apartment: addr.addressLine2 || '',
+      city: addr.city,
+      state: addr.state,
+      pinCode: addr.pincode
+    });
+  };
 
   const discountAmount = appliedCoupon ? Math.round(cartSubtotal * appliedCoupon.discount) : 0;
   const shippingFee = (cartSubtotal >= 999 && shippingMethod === 'standard') 
@@ -49,24 +91,76 @@ export const CheckoutPage: React.FC = () => {
   const handleContinueToPayment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.firstName.trim() || !formData.address.trim() || !formData.city.trim() || !formData.pinCode.trim()) {
-      showToast('Missing details', 'Please complete your shipping address to proceed', 'info');
+      showToast('Missing Details', 'Please complete all required delivery address fields', 'info');
       return;
     }
 
-    setShippingAddress({
+    const fullAddressObj = {
       fullName: `${formData.firstName} ${formData.lastName}`.trim(),
-      email: formData.email,
       phone: formData.phone,
       addressLine1: formData.address,
       addressLine2: formData.apartment,
       city: formData.city,
       state: formData.state,
       pincode: formData.pinCode,
+      label: 'Home' as const,
+      isDefault: savedAddresses.length === 0
+    };
+
+    // If user had no saved address, automatically save it to their profile!
+    if (savedAddresses.length === 0 || selectedAddressId === 'new') {
+      addSavedAddress(fullAddressObj);
+    }
+
+    setShippingAddress({
+      ...fullAddressObj,
+      email: formData.email,
       deliveryMethod: shippingMethod
     });
 
     navigateTo('payment');
   };
+
+  // Auth Guard: Logged-out users cannot access checkout
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-[80vh] bg-[#F8F4EE] py-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center text-center">
+        <div className="w-full max-w-md bg-white rounded-2xl border border-[#E7DED2] p-8 shadow-xs relative overflow-hidden animate-fadeIn">
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#D9A7A0] via-[#8C6F5A] to-[#AAB5A0]" />
+          
+          <div className="w-16 h-16 rounded-full bg-[#E7DED2]/50 text-[#8C6F5A] flex items-center justify-center mx-auto mb-4">
+            <Lock className="w-8 h-8 text-[#8C6F5A]" />
+          </div>
+
+          <h2 className="font-serif-heading text-2xl font-bold text-[#332C28]">
+            Sign In Required for Checkout
+          </h2>
+          <p className="text-xs sm:text-sm text-[#332C28]/70 mt-2 mb-6 leading-relaxed">
+            Please log in or create an account to proceed to checkout and complete your order.
+          </p>
+
+          <div className="space-y-3">
+            <button
+              id="checkout-login-guard-btn"
+              onClick={() => navigateTo('login')}
+              className="w-full py-3.5 px-6 rounded-xl bg-[#8C6F5A] hover:bg-[#735A48] active:bg-[#5C473A] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>LOG IN TO CHECKOUT</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+
+            <button
+              id="checkout-signup-guard-btn"
+              onClick={() => navigateTo('signup')}
+              className="w-full py-3 px-6 rounded-xl border border-[#E7DED2] bg-white hover:bg-[#F8F4EE] text-[#332C28] text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>Create New Account</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // If cart is empty
   if (cart.length === 0) {
@@ -95,10 +189,11 @@ export const CheckoutPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <button
             onClick={() => navigateTo('cart')}
-            className="text-xs font-bold text-[#8C6F5A] hover:underline flex items-center gap-1.5"
+            className="text-xs font-bold text-[#8C6F5A] hover:text-[#332C28] flex items-center gap-1.5 p-1 -ml-1 sm:p-0 sm:ml-0 rounded-lg transition-colors cursor-pointer"
+            aria-label="Return to Bag"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Return to Bag</span>
+            <ArrowLeft className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+            <span className="hidden sm:inline hover:underline">Return to Bag</span>
           </button>
 
           <div className="font-serif-heading text-lg font-bold text-[#332C28] tracking-wider uppercase">
@@ -107,7 +202,7 @@ export const CheckoutPage: React.FC = () => {
 
           <div className="flex items-center gap-1.5 text-xs text-[#8C6F5A] font-semibold">
             <Lock className="w-3.5 h-3.5" />
-            <span>Secure 256-Bit SSL</span>
+            <span>Secure Checkout</span>
           </div>
         </div>
       </div>
@@ -186,12 +281,106 @@ export const CheckoutPage: React.FC = () => {
 
             {/* 2. Shipping Address */}
             <div className="bg-white p-6 rounded-2xl border border-[#E7DED2] shadow-xs space-y-4">
-              <h2 className="font-serif-heading text-lg font-bold text-[#332C28] flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#8C6F5A] text-white text-xs flex items-center justify-center font-bold">2</span>
-                <span>Delivery Address</span>
-              </h2>
+              <div className="flex items-center justify-between">
+                <h2 className="font-serif-heading text-lg font-bold text-[#332C28] flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-[#8C6F5A] text-white text-xs flex items-center justify-center font-bold">2</span>
+                  <span>Delivery Address</span>
+                </h2>
+                {savedAddresses.length > 0 && (
+                  <span className="text-xs font-semibold text-[#8C6F5A] bg-[#E7DED2]/50 px-2.5 py-1 rounded-full">
+                    {savedAddresses.length} Saved {savedAddresses.length === 1 ? 'Address' : 'Addresses'}
+                  </span>
+                )}
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Notice when no saved address is present */}
+              {savedAddresses.length === 0 && (
+                <div className="p-3.5 bg-[#E7DED2]/40 border border-[#E7DED2] rounded-xl text-xs text-[#332C28] flex items-start gap-2.5">
+                  <Truck className="w-4 h-4 text-[#8C6F5A] flex-shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold">Delivery Address Required:</span> Please provide your shipping address below. It will be automatically saved to your account for future orders.
+                  </div>
+                </div>
+              )}
+
+              {/* Saved Address Cards List */}
+              {savedAddresses.length > 0 && (
+                <div className="space-y-3 mb-4">
+                  <div className="text-xs font-bold text-[#332C28] uppercase tracking-wider">Select Saved Address:</div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {savedAddresses.map((addr) => {
+                      const isSelected = selectedAddressId === addr.id;
+                      return (
+                        <div
+                          key={addr.id}
+                          onClick={() => selectSavedAddress(addr)}
+                          className={`p-3.5 rounded-xl border text-xs cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                            isSelected
+                              ? 'border-[#8C6F5A] bg-[#F8F4EE] ring-1 ring-[#8C6F5A]'
+                              : 'border-[#E7DED2] bg-white hover:bg-[#F8F4EE]/50'
+                          }`}
+                        >
+                          <div className="flex items-start gap-2.5 min-w-0">
+                            <input
+                              type="radio"
+                              name="savedAddressSelect"
+                              checked={isSelected}
+                              onChange={() => selectSavedAddress(addr)}
+                              className="mt-0.5 accent-[#8C6F5A]"
+                            />
+                            <div>
+                              <div className="font-bold text-[#332C28] flex items-center gap-2">
+                                <span>{addr.fullName}</span>
+                                {addr.isDefault && (
+                                  <span className="text-[10px] font-bold bg-[#8C6F5A] text-white px-2 py-0.5 rounded-md">Default</span>
+                                )}
+                              </div>
+                              <div className="text-[#332C28]/80 mt-1 leading-relaxed">
+                                {addr.addressLine1}{addr.addressLine2 ? `, ${addr.addressLine2}` : ''}, {addr.city}, {addr.state} - {addr.pincode}
+                              </div>
+                              <div className="text-[#332C28]/60 mt-0.5">Phone: {addr.phone}</div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    <div
+                      onClick={() => {
+                        setSelectedAddressId('new');
+                        setFormData({
+                          email: user?.email || 'priya@example.com',
+                          phone: user?.phone || '+91 98765 43210',
+                          firstName: user?.firstName || '',
+                          lastName: user?.lastName || '',
+                          address: '',
+                          apartment: '',
+                          city: '',
+                          state: 'Rajasthan',
+                          pinCode: ''
+                        });
+                      }}
+                      className={`p-3 rounded-xl border border-dashed text-xs cursor-pointer transition-all flex items-center gap-2 font-bold ${
+                        selectedAddressId === 'new'
+                          ? 'border-[#8C6F5A] bg-[#F8F4EE] text-[#8C6F5A]'
+                          : 'border-[#E7DED2] text-[#332C28]/70 hover:border-[#8C6F5A]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="savedAddressSelect"
+                        checked={selectedAddressId === 'new'}
+                        onChange={() => setSelectedAddressId('new')}
+                        className="accent-[#8C6F5A]"
+                      />
+                      <span>+ Enter a New Shipping Address</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Address Form Inputs */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div>
                   <label className="block text-xs font-bold text-[#332C28] mb-1">First Name *</label>
                   <input

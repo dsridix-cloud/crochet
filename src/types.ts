@@ -261,7 +261,7 @@ export interface ToastMessage {
   id: string;
   title: string;
   message: string;
-  type: 'success' | 'info' | 'cart' | 'wishlist';
+  type: 'success' | 'info' | 'cart' | 'wishlist' | 'error';
   image?: string;
 }
 

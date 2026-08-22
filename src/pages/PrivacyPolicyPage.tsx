@@ -33,9 +33,9 @@ export const PrivacyPolicyPage: React.FC = () => {
 
         <div className="p-4 rounded-2xl bg-white border border-[#E7DED2] shadow-xs space-y-2">
           <Lock className="w-5 h-5 text-[#8C6F5A]" />
-          <h3 className="text-xs font-bold text-[#332C28]">256-Bit SSL Encryption</h3>
+          <h3 className="text-xs font-bold text-[#332C28]">Secure Encryption</h3>
           <p className="text-[11px] text-[#332C28]/70">
-            All customer addresses and payment transactions are secured with enterprise-grade SSL.
+            All customer addresses and payment transactions are secured with industry-standard encryption.
           </p>
         </div>
 

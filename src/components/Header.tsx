@@ -39,7 +39,15 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const [expandedCollectionId, setExpandedCollectionId] = useState<string | null>(null);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Reset expanded collection when mobile drawer closes
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setExpandedCollectionId(null);
+    }
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,37 +103,50 @@ export const Header: React.FC = () => {
         id="main-header"
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#F8F4EE]/95 backdrop-blur-md shadow-sm border-b border-[#E7DED2]/80 py-2.5 sm:py-3' 
-            : 'bg-[#F8F4EE] border-b border-[#E7DED2]/40 py-3 sm:py-4'
+            ? 'bg-[#F8F4EE]/95 backdrop-blur-md shadow-xs border-b border-[#E7DED2]/80 py-2 sm:py-2.5' 
+            : 'bg-[#F8F4EE] border-b border-[#E7DED2]/40 py-2.5 sm:py-3.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-2 sm:gap-4">
+          {/* Top Row: Mobile Menu Toggle / Desktop Info (Left), Brand Logo (Center), Action Buttons (Right) */}
+          <div className="flex items-center justify-between gap-2 sm:gap-4 py-0.5">
             
-            {/* Mobile Left: Hamburger */}
-            <div className="flex items-center lg:hidden flex-shrink-0">
+            {/* 1. Left Control (Mobile Hamburger button & Desktop Quick Info) */}
+            <div className="flex items-center gap-2 sm:w-1/4 min-w-0">
               <button
                 id="mobile-menu-toggle-btn"
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-1.5 -ml-1 text-[#332C28] hover:text-[#8C6F5A] focus:outline-none transition-colors"
+                className="p-1.5 sm:p-2 -ml-1 text-[#332C28] hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40 focus:outline-none transition-all rounded-xl xl:hidden flex items-center gap-1.5 cursor-pointer"
                 aria-label="Toggle Navigation Menu"
               >
-                {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+                {isMobileMenuOpen ? (
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                ) : (
+                  <>
+                    <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <span className="hidden sm:inline text-xs font-semibold text-[#332C28]/80 uppercase tracking-wider">Menu</span>
+                  </>
+                )}
               </button>
+
+              <div className="hidden xl:flex items-center gap-2 text-xs text-[#332C28]/70 font-medium">
+                <Sparkles className="w-3.5 h-3.5 text-[#D9A7A0] flex-shrink-0" />
+                <span className="truncate">Jaipur Artisanal Studio</span>
+              </div>
             </div>
 
-            {/* Brand Logo */}
-            <div className="flex-1 lg:flex-initial flex items-center justify-center lg:justify-start min-w-0">
+            {/* 2. Center Brand Logo (Prominent, Unobstructed Centered Banner) */}
+            <div className="flex-1 flex flex-col items-center justify-center text-center px-1">
               <button 
                 id="brand-logo-btn"
                 onClick={() => navigateTo('home')} 
-                className="text-center lg:text-left group flex flex-col items-center lg:items-start focus:outline-none"
+                className="group flex flex-col items-center focus:outline-none cursor-pointer"
               >
                 <span className="font-serif-heading text-lg sm:text-2xl md:text-3xl font-bold tracking-wider sm:tracking-widest text-[#332C28] group-hover:text-[#8C6F5A] transition-colors whitespace-nowrap">
                   MAISON CROCHET
                 </span>
-                <span className="text-[7.5px] sm:text-[9px] uppercase tracking-[0.18em] sm:tracking-[0.25em] text-[#8C6F5A] font-semibold -mt-0.5 sm:-mt-1 flex items-center gap-1 whitespace-nowrap">
+                <span className="text-[7.5px] sm:text-[9.5px] uppercase tracking-[0.18em] sm:tracking-[0.25em] text-[#8C6F5A] font-semibold -mt-0.5 sm:-mt-1 flex items-center gap-1.5 whitespace-nowrap">
                   <span>Artisanal Studio</span>
                   <span className="inline-block w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#D9A7A0]"></span>
                   <span>Est. 2024</span>
@@ -133,199 +154,50 @@ export const Header: React.FC = () => {
               </button>
             </div>
 
-            {/* Desktop Navigation Links */}
-            <nav id="desktop-nav" className="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
-              <button
-                id="nav-link-home"
-                onClick={() => navigateTo('home')}
-                className={`transition-colors relative py-1 ${
-                  currentPage === 'home' 
-                    ? 'text-[#332C28] font-semibold' 
-                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                }`}
-              >
-                Home
-                {currentPage === 'home' && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
-                )}
-              </button>
-
-              <button
-                id="nav-link-shop"
-                onClick={() => navigateTo('shop')}
-                className={`transition-colors relative py-1 ${
-                  currentPage === 'shop' 
-                    ? 'text-[#332C28] font-semibold' 
-                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                }`}
-              >
-                Shop All
-                {currentPage === 'shop' && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
-                )}
-              </button>
-
-              {/* Collections Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setIsCollectionsDropdownOpen(true)}
-                onMouseLeave={() => setIsCollectionsDropdownOpen(false)}
-              >
-                <button
-                  id="nav-link-collections"
-                  onClick={() => navigateTo('collection', { categorySlug: 'bags' })}
-                  className={`flex items-center gap-1 py-1 transition-colors ${
-                    currentPage === 'collection' 
-                      ? 'text-[#332C28] font-semibold' 
-                      : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                  }`}
-                >
-                  <span>Collections</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isCollectionsDropdownOpen ? 'rotate-180 text-[#8C6F5A]' : ''}`} />
-                </button>
-
-                {/* Dropdown Menu */}
-                {isCollectionsDropdownOpen && (
-                  <div className="absolute top-full left-0 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-[#E7DED2] p-3 animate-fade-in z-50">
-                    <div className="text-[11px] font-semibold text-[#8C6F5A] uppercase tracking-wider px-3 py-1.5 border-b border-[#E7DED2]/60">
-                      Curated Categories
-                    </div>
-                    <div className="mt-1 space-y-1">
-                      {CATEGORIES_DATA.map((cat) => (
-                        <button
-                          key={cat.id}
-                          id={`dropdown-cat-${cat.id}`}
-                          onClick={() => {
-                            setIsCollectionsDropdownOpen(false);
-                            navigateTo('collection', { categorySlug: cat.id });
-                          }}
-                          className="w-full flex items-center justify-between px-3 py-2 text-left rounded-lg text-sm text-[#332C28] hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors group"
-                        >
-                          <div className="flex items-center gap-2.5">
-                            <img 
-                              src={cat.image} 
-                              alt={cat.name} 
-                              className="w-7 h-7 rounded-md object-cover border border-[#E7DED2]" 
-                            />
-                            <div>
-                              <div className="font-medium text-xs text-[#332C28]">{cat.name}</div>
-                              <div className="text-[10px] text-[#332C28]/60">{cat.count} handcrafted styles</div>
-                            </div>
-                          </div>
-                          <ArrowRight className="w-3.5 h-3.5 text-[#8C6F5A] opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <button
-                id="nav-link-custom-orders"
-                onClick={() => navigateTo('custom-orders')}
-                className={`flex items-center gap-1.5 transition-colors relative py-1 ${
-                  currentPage === 'custom-orders' 
-                    ? 'text-[#8C6F5A] font-semibold' 
-                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                }`}
-              >
-                <Scissors className="w-3.5 h-3.5 text-[#D9A7A0]" />
-                <span>Custom Orders</span>
-                {currentPage === 'custom-orders' && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
-                )}
-              </button>
-
-              <button
-                id="nav-link-about"
-                onClick={() => navigateTo('about')}
-                className={`transition-colors relative py-1 ${
-                  currentPage === 'about' 
-                    ? 'text-[#332C28] font-semibold' 
-                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                }`}
-              >
-                Our Story
-                {currentPage === 'about' && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
-                )}
-              </button>
-
-              <button
-                id="nav-link-faq"
-                onClick={() => navigateTo('faq')}
-                className={`transition-colors relative py-1 ${
-                  currentPage === 'faq' 
-                    ? 'text-[#332C28] font-semibold' 
-                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                }`}
-              >
-                FAQ
-                {currentPage === 'faq' && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
-                )}
-              </button>
-
-              <button
-                id="nav-link-contact"
-                onClick={() => navigateTo('contact')}
-                className={`transition-colors relative py-1 ${
-                  currentPage === 'contact' 
-                    ? 'text-[#332C28] font-semibold' 
-                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
-                }`}
-              >
-                Contact
-                {currentPage === 'contact' && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
-                )}
-              </button>
-            </nav>
-
-            {/* Right Action Icons: Search, Wishlist, Cart, Profile */}
-            <div className="flex items-center gap-1 sm:gap-2 md:gap-2.5 flex-shrink-0">
-              {/* 1. Search Button */}
+            {/* 3. Right Action Icons (Search, Wishlist, Bag, My Account) */}
+            <div className="flex items-center justify-end gap-1 sm:gap-2.5 sm:w-1/4 flex-shrink-0">
+              {/* Search Button */}
               <button
                 id="header-search-btn"
                 type="button"
                 onClick={openSearchModal}
-                className="p-1.5 sm:p-2 text-[#332C28] hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40 rounded-full transition-all"
+                className="p-1.5 sm:p-2 text-[#332C28] hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40 rounded-full transition-all cursor-pointer"
                 aria-label="Search handmade products"
                 title="Search products"
               >
                 <Search className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
               </button>
 
-              {/* 2. Wishlist Button with Badge */}
+              {/* Wishlist Button with Badge */}
               <button
                 id="header-wishlist-btn"
                 type="button"
                 onClick={() => navigateTo('wishlist')}
-                className="p-1.5 sm:p-2 text-[#332C28] hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40 rounded-full transition-all relative"
+                className="p-1.5 sm:p-2 text-[#332C28] hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40 rounded-full transition-all relative cursor-pointer"
                 aria-label="View Saved Wishlist"
                 title="Wishlist"
               >
                 <Heart className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                 {wishlistCount > 0 && (
-                  <span className="absolute top-0.5 right-0.5 bg-[#D9A7A0] text-white text-[9px] sm:text-[10px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center shadow-xs">
+                  <span className="absolute top-0.5 right-0.5 bg-[#D9A7A0] text-white text-[9px] sm:text-[10px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center shadow-2xs">
                     {wishlistCount}
                   </span>
                 )}
               </button>
 
-              {/* 3. Cart Button with Badge */}
+              {/* Cart Button with Badge */}
               <button
                 id="header-cart-btn"
                 type="button"
                 onClick={() => navigateTo('cart')}
-                className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:py-2 sm:px-3.5 bg-[#332C28] text-[#F8F4EE] hover:bg-[#8C6F5A] rounded-full transition-all shadow-xs group"
+                className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:py-2 sm:px-3.5 bg-[#332C28] text-[#F8F4EE] hover:bg-[#8C6F5A] rounded-full transition-all shadow-2xs group cursor-pointer"
                 aria-label="View Shopping Bag"
                 title="Your Shopping Bag"
               >
                 <div className="relative flex items-center justify-center">
-                  <ShoppingBag className="w-4 h-4 sm:w-4 sm:h-4 text-[#F8F4EE] group-hover:scale-105 transition-transform" />
+                  <ShoppingBag className="w-4 h-4 text-[#F8F4EE] group-hover:scale-105 transition-transform" />
                   {cartCount > 0 && (
-                    <span className="sm:hidden absolute -top-1.5 -right-1.5 bg-[#D9A7A0] text-[#332C28] text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-xs">
+                    <span className="sm:hidden absolute -top-1.5 -right-1.5 bg-[#D9A7A0] text-[#332C28] text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-2xs">
                       {cartCount}
                     </span>
                   )}
@@ -340,13 +212,13 @@ export const Header: React.FC = () => {
                 </span>
               </button>
 
-              {/* 4. Profile / Account Dropdown (Set as last item) */}
+              {/* Profile / Account Dropdown */}
               <div className="relative" ref={accountDropdownRef}>
                 <button
                   id="header-account-btn"
                   type="button"
                   onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                  className={`p-1.5 sm:py-1.5 sm:px-2.5 rounded-full flex items-center gap-1.5 transition-all text-xs font-semibold ${
+                  className={`p-1.5 sm:py-1.5 sm:px-2.5 rounded-full flex items-center gap-1.5 transition-all text-xs font-semibold cursor-pointer ${
                     currentPage === 'account' || isAccountDropdownOpen
                       ? 'bg-[#E7DED2]/60 text-[#332C28]'
                       : 'text-[#332C28] hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40'
@@ -379,7 +251,6 @@ export const Header: React.FC = () => {
                   <div className="absolute right-0 top-full mt-1.5 w-60 bg-white/98 backdrop-blur-md rounded-2xl shadow-xl border border-[#E7DED2] p-2 animate-fade-in z-50">
                     {user ? (
                       <>
-                        {/* Logged in header info */}
                         <div className="p-3 border-b border-[#E7DED2]/60 mb-1">
                           <div className="font-semibold text-xs text-[#332C28] truncate">
                             {user.firstName} {user.lastName}
@@ -389,11 +260,10 @@ export const Header: React.FC = () => {
                           </div>
                         </div>
 
-                        {/* Navigation items */}
                         <div className="space-y-0.5 text-xs font-medium text-[#332C28]">
                           <button
                             onClick={() => handleAccountNav('overview')}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left cursor-pointer"
                           >
                             <User className="w-3.5 h-3.5 text-[#8C6F5A]" />
                             <span>My Account Overview</span>
@@ -401,7 +271,7 @@ export const Header: React.FC = () => {
 
                           <button
                             onClick={() => handleAccountNav('orders')}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left cursor-pointer"
                           >
                             <ShoppingBag className="w-3.5 h-3.5 text-[#8C6F5A]" />
                             <span>My Orders</span>
@@ -409,7 +279,7 @@ export const Header: React.FC = () => {
 
                           <button
                             onClick={() => handleAccountNav('track-order')}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left cursor-pointer"
                           >
                             <Truck className="w-3.5 h-3.5 text-[#8C6F5A]" />
                             <span>Track Order</span>
@@ -420,7 +290,7 @@ export const Header: React.FC = () => {
                               setIsAccountDropdownOpen(false);
                               navigateTo('wishlist');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left cursor-pointer"
                           >
                             <Heart className="w-3.5 h-3.5 text-[#D9A7A0]" />
                             <span>Favorites ({wishlistCount})</span>
@@ -428,7 +298,7 @@ export const Header: React.FC = () => {
 
                           <button
                             onClick={() => handleAccountNav('addresses')}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left cursor-pointer"
                           >
                             <MapPin className="w-3.5 h-3.5 text-[#8C6F5A]" />
                             <span>Saved Addresses</span>
@@ -436,21 +306,20 @@ export const Header: React.FC = () => {
 
                           <button
                             onClick={() => handleAccountNav('settings')}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors text-left cursor-pointer"
                           >
                             <Settings className="w-3.5 h-3.5 text-[#8C6F5A]" />
                             <span>Account Settings</span>
                           </button>
                         </div>
 
-                        {/* Logout */}
                         <div className="pt-1 mt-1 border-t border-[#E7DED2]/60">
                           <button
                             onClick={() => {
                               setIsAccountDropdownOpen(false);
                               logout();
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer"
                           >
                             <LogOut className="w-3.5 h-3.5" />
                             <span>Log Out</span>
@@ -470,7 +339,7 @@ export const Header: React.FC = () => {
                             setIsAccountDropdownOpen(false);
                             navigateTo('login');
                           }}
-                          className="w-full py-2.5 px-4 bg-[#332C28] hover:bg-[#8C6F5A] text-[#F8F4EE] text-xs uppercase tracking-widest font-semibold rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5"
+                          className="w-full py-2.5 px-4 bg-[#332C28] hover:bg-[#8C6F5A] text-[#F8F4EE] text-xs uppercase tracking-widest font-semibold rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                         >
                           <User className="w-3.5 h-3.5" />
                           <span>SIGN IN</span>
@@ -482,7 +351,7 @@ export const Header: React.FC = () => {
                             setIsAccountDropdownOpen(false);
                             navigateTo('signup');
                           }}
-                          className="w-full py-2 px-4 bg-[#F8F4EE] hover:bg-[#E7DED2]/50 border border-[#E7DED2] text-[#332C28] text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                          className="w-full py-2 px-4 bg-[#F8F4EE] hover:bg-[#E7DED2]/50 border border-[#E7DED2] text-[#332C28] text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                         >
                           <UserPlus className="w-3.5 h-3.5 text-[#8C6F5A]" />
                           <span>CREATE ACCOUNT</span>
@@ -495,12 +364,163 @@ export const Header: React.FC = () => {
             </div>
 
           </div>
+
+          {/* Desktop Navigation Row (Visible on desktop `xl:flex`, converted to drawer on mobile/tablet `< xl`) */}
+          <div className="hidden xl:flex items-center justify-center pt-2 mt-2 border-t border-[#E7DED2]/50">
+            <nav id="desktop-nav" className="flex items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm font-medium tracking-wide">
+              <button
+                id="nav-link-home"
+                onClick={() => navigateTo('home')}
+                className={`transition-colors relative py-1 cursor-pointer ${
+                  currentPage === 'home' 
+                    ? 'text-[#332C28] font-bold' 
+                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                }`}
+              >
+                <span>Home</span>
+                {currentPage === 'home' && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
+                )}
+              </button>
+
+              <button
+                id="nav-link-shop"
+                onClick={() => navigateTo('shop')}
+                className={`transition-colors relative py-1 cursor-pointer ${
+                  currentPage === 'shop' 
+                    ? 'text-[#332C28] font-bold' 
+                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                }`}
+              >
+                <span>Shop All</span>
+                {currentPage === 'shop' && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
+                )}
+              </button>
+
+              {/* Collections Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsCollectionsDropdownOpen(true)}
+                onMouseLeave={() => setIsCollectionsDropdownOpen(false)}
+              >
+                <button
+                  id="nav-link-collections"
+                  onClick={() => navigateTo('collection', { categorySlug: 'bags' })}
+                  className={`flex items-center gap-1 py-1 transition-colors cursor-pointer ${
+                    currentPage === 'collection' 
+                      ? 'text-[#332C28] font-bold' 
+                      : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                  }`}
+                >
+                  <span>Collections</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isCollectionsDropdownOpen ? 'rotate-180 text-[#8C6F5A]' : ''}`} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {isCollectionsDropdownOpen && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white/98 backdrop-blur-md rounded-xl shadow-xl border border-[#E7DED2] p-3 animate-fade-in z-50">
+                    <div className="text-[11px] font-semibold text-[#8C6F5A] uppercase tracking-wider px-3 py-1.5 border-b border-[#E7DED2]/60">
+                      Curated Categories
+                    </div>
+                    <div className="mt-1 space-y-1">
+                      {CATEGORIES_DATA.map((cat) => (
+                        <button
+                          key={cat.id}
+                          id={`dropdown-cat-${cat.id}`}
+                          onClick={() => {
+                            setIsCollectionsDropdownOpen(false);
+                            navigateTo('collection', { categorySlug: cat.id });
+                          }}
+                          className="w-full flex items-center justify-between px-3 py-2 text-left rounded-lg text-sm text-[#332C28] hover:bg-[#F8F4EE] hover:text-[#8C6F5A] transition-colors group cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <img 
+                              src={cat.image} 
+                              alt={cat.name} 
+                              className="w-7 h-7 rounded-md object-cover border border-[#E7DED2]" 
+                            />
+                            <div>
+                              <div className="font-medium text-xs text-[#332C28]">{cat.name}</div>
+                              <div className="text-[10px] text-[#332C28]/60">{cat.count} handcrafted styles</div>
+                            </div>
+                          </div>
+                          <ArrowRight className="w-3.5 h-3.5 text-[#8C6F5A] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <button
+                id="nav-link-custom-orders"
+                onClick={() => navigateTo('custom-orders')}
+                className={`flex items-center gap-1.5 transition-colors relative py-1 cursor-pointer ${
+                  currentPage === 'custom-orders' 
+                    ? 'text-[#8C6F5A] font-bold' 
+                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                }`}
+              >
+                <Scissors className="w-3.5 h-3.5 text-[#D9A7A0]" />
+                <span>Custom Orders</span>
+                {currentPage === 'custom-orders' && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
+                )}
+              </button>
+
+              <button
+                id="nav-link-about"
+                onClick={() => navigateTo('about')}
+                className={`transition-colors relative py-1 cursor-pointer ${
+                  currentPage === 'about' 
+                    ? 'text-[#332C28] font-bold' 
+                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                }`}
+              >
+                <span>Our Story</span>
+                {currentPage === 'about' && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
+                )}
+              </button>
+
+              <button
+                id="nav-link-faq"
+                onClick={() => navigateTo('faq')}
+                className={`transition-colors relative py-1 cursor-pointer ${
+                  currentPage === 'faq' 
+                    ? 'text-[#332C28] font-bold' 
+                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                }`}
+              >
+                <span>FAQ</span>
+                {currentPage === 'faq' && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
+                )}
+              </button>
+
+              <button
+                id="nav-link-contact"
+                onClick={() => navigateTo('contact')}
+                className={`transition-colors relative py-1 cursor-pointer ${
+                  currentPage === 'contact' 
+                    ? 'text-[#332C28] font-bold' 
+                    : 'text-[#332C28]/80 hover:text-[#8C6F5A]'
+                }`}
+              >
+                <span>Contact</span>
+                {currentPage === 'contact' && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#8C6F5A] rounded-full" />
+                )}
+              </button>
+            </nav>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex">
+        <div className="fixed inset-0 z-50 xl:hidden flex">
           {/* Backdrop */}
           <div 
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity" 
@@ -508,7 +528,7 @@ export const Header: React.FC = () => {
           />
 
           {/* Drawer content */}
-          <div className="relative w-[85vw] max-w-xs sm:max-w-sm bg-[#F8F4EE] h-full shadow-2xl flex flex-col justify-between overflow-y-auto border-r border-[#E7DED2] p-5 sm:p-6 z-10 animate-fade-in">
+          <div className="relative w-[85vw] max-w-xs sm:max-w-md md:max-w-lg bg-[#F8F4EE] h-full shadow-2xl flex flex-col justify-between overflow-y-auto border-r border-[#E7DED2] p-5 sm:p-6 sm:p-8 z-10 animate-fade-in">
             <div>
               {/* Header inside drawer */}
               <div className="flex items-center justify-between pb-3.5 border-b border-[#E7DED2]">
@@ -630,26 +650,109 @@ export const Header: React.FC = () => {
 
                 {/* Mobile Collections Expandable */}
                 <div className="pt-2 pb-1 px-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C6F5A] px-2">
-                    Collections
-                  </span>
-                  <div className="mt-1 space-y-1 pl-2 border-l-2 border-[#D9A7A0]/60">
-                    {CATEGORIES_DATA.map((cat) => (
-                      <button
-                        key={cat.id}
-                        id={`mob-cat-${cat.id}`}
-                        onClick={() => {
-                          setIsMobileMenuOpen(false);
-                          navigateTo('collection', { categorySlug: cat.id });
-                        }}
-                        className="w-full text-left py-1.5 px-2 rounded-lg text-xs text-[#332C28]/90 hover:text-[#8C6F5A] hover:bg-[#E7DED2]/40 transition-colors flex items-center justify-between"
-                      >
-                        <span className="font-medium text-xs text-[#332C28]">{cat.name}</span>
-                        <span className="text-[10px] font-bold text-[#8C6F5A] bg-[#E7DED2]/70 px-2 py-0.5 rounded-full whitespace-nowrap">
-                          {cat.count} styles
-                        </span>
-                      </button>
-                    ))}
+                  <div className="flex items-center justify-between px-2 mb-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C6F5A]">
+                      Collections
+                    </span>
+                    <span className="text-[10px] text-[#332C28]/50 font-medium">
+                      Tap to view sub-collections
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    {CATEGORIES_DATA.map((cat) => {
+                      const hasSubCategories = Boolean(cat.subCategories && cat.subCategories.length > 0);
+                      const isExpanded = expandedCollectionId === cat.id;
+
+                      return (
+                        <div key={cat.id} className="rounded-xl border border-[#E7DED2]/90 bg-white/80 overflow-hidden transition-all shadow-2xs">
+                          {/* Main Collection Button */}
+                          <button
+                            type="button"
+                            id={`mob-cat-${cat.id}`}
+                            onClick={() => {
+                              if (hasSubCategories) {
+                                setExpandedCollectionId(isExpanded ? null : cat.id);
+                              } else {
+                                setIsMobileMenuOpen(false);
+                                navigateTo('collection', { categorySlug: cat.id });
+                              }
+                            }}
+                            className="w-full text-left py-2.5 px-3 flex items-center justify-between text-xs font-semibold text-[#332C28] hover:bg-[#E7DED2]/40 active:bg-[#E7DED2]/70 transition-colors cursor-pointer"
+                            aria-expanded={hasSubCategories ? isExpanded : undefined}
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <img 
+                                src={cat.image} 
+                                alt={cat.name} 
+                                className="w-6 h-6 rounded-md object-cover border border-[#E7DED2]" 
+                              />
+                              <span className="font-semibold text-xs text-[#332C28] truncate">{cat.name}</span>
+                            </div>
+
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <span className="text-[10px] font-bold text-[#8C6F5A] bg-[#E7DED2]/80 px-2 py-0.5 rounded-full whitespace-nowrap">
+                                {cat.count} styles
+                              </span>
+                              {hasSubCategories ? (
+                                <ChevronDown 
+                                  className={`w-4 h-4 text-[#8C6F5A] transition-transform duration-300 ${
+                                    isExpanded ? 'rotate-180 text-[#332C28]' : ''
+                                  }`} 
+                                />
+                              ) : (
+                                <ArrowRight className="w-3.5 h-3.5 text-[#8C6F5A]" />
+                              )}
+                            </div>
+                          </button>
+
+                          {/* Sub-Collections List - Accordion Panel */}
+                          {hasSubCategories && (
+                            <div 
+                              className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                                isExpanded ? 'max-h-96 opacity-100 py-2 border-t border-[#E7DED2]/60 bg-[#F8F4EE]/80' : 'max-h-0 opacity-0 py-0 border-t-0'
+                              }`}
+                            >
+                              <div className="pl-3.5 pr-3 space-y-1">
+                                {/* Shop All in Collection */}
+                                <button
+                                  type="button"
+                                  id={`mob-subcat-all-${cat.id}`}
+                                  onClick={() => {
+                                    setIsMobileMenuOpen(false);
+                                    navigateTo('collection', { categorySlug: cat.id });
+                                  }}
+                                  className="w-full text-left py-1.5 px-2.5 rounded-lg text-xs font-bold text-[#8C6F5A] hover:bg-[#E7DED2]/60 active:bg-[#E7DED2] transition-colors flex items-center justify-between group cursor-pointer"
+                                >
+                                  <span className="flex items-center gap-1.5">
+                                    <Sparkles className="w-3 h-3 text-[#D9A7A0]" />
+                                    <span>Shop All {cat.name}</span>
+                                  </span>
+                                  <ArrowRight className="w-3.5 h-3.5 text-[#8C6F5A] group-hover:translate-x-0.5 transition-transform" />
+                                </button>
+
+                                {/* Sub-Collections */}
+                                {cat.subCategories!.map((sub) => (
+                                  <button
+                                    key={sub.id}
+                                    type="button"
+                                    id={`mob-subcat-${cat.id}-${sub.id}`}
+                                    onClick={() => {
+                                      setIsMobileMenuOpen(false);
+                                      navigateTo('collection', { categorySlug: cat.id });
+                                    }}
+                                    className="w-full text-left py-1.5 px-2.5 rounded-lg text-xs font-medium text-[#332C28]/85 hover:text-[#332C28] hover:bg-[#E7DED2]/40 active:bg-[#E7DED2]/60 transition-colors flex items-center gap-2 cursor-pointer"
+                                  >
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#D9A7A0] flex-shrink-0"></span>
+                                    <span className="truncate">{sub.name}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 

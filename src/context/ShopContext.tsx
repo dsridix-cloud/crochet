@@ -88,7 +88,7 @@ interface ShopContextType {
   trackOrder: (orderIdOrNumber: string) => void;
 
   // Feedback
-  showToast: (title: string, message: string, type?: 'success' | 'info' | 'cart' | 'wishlist', image?: string) => void;
+  showToast: (title: string, message: string, type?: 'success' | 'info' | 'cart' | 'wishlist' | 'error', image?: string) => void;
   removeToast: (id: string) => void;
   
   // Checkout & Order
@@ -162,12 +162,13 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Customer Account State
   const [accountTab, setAccountTab] = useState<AccountTab>('overview');
+  const [pendingCheckout, setPendingCheckout] = useState<boolean>(false);
   
-  // DEMO ONLY — Replace with real authentication backend later
+  // Authentication State
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     try {
       const saved = localStorage.getItem(AUTH_STORAGE_KEY);
-      return saved !== null ? JSON.parse(saved) : true; // Default logged in to show rich demo immediately
+      return saved !== null ? JSON.parse(saved) : true;
     } catch {
       return true;
     }
@@ -175,6 +176,9 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [user, setUser] = useState<UserProfile | null>(() => {
     try {
+      const savedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
+      const isAuth = savedAuth !== null ? JSON.parse(savedAuth) : true;
+      if (!isAuth) return null;
       const saved = localStorage.getItem(USER_STORAGE_KEY);
       return saved ? JSON.parse(saved) : DEFAULT_DEMO_USER;
     } catch {
@@ -337,6 +341,16 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (options?.query !== undefined) setSearchQuery(options.query);
     if (options?.accountTab) setAccountTab(options.accountTab);
 
+    // Protection for checkout & payment routes when logged out
+    if ((page === 'checkout' || page === 'payment') && !isLoggedIn) {
+      setPendingCheckout(true);
+      showToast('Sign In Required', 'Please sign in to proceed with checkout and place your order.', 'info');
+      setCurrentPage('login');
+      setIsMobileMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     // Map sub-account routes to 'account' container with sub-tabs
     if (page === 'account-orders') {
       setAccountTab('orders');
@@ -387,7 +401,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
   const closeLightbox = () => setLightboxItem(null);
 
-  const showToast = (title: string, message: string, type: 'success' | 'info' | 'cart' | 'wishlist' = 'success', image?: string) => {
+  const showToast = (title: string, message: string, type: 'success' | 'info' | 'cart' | 'wishlist' | 'error' = 'success', image?: string) => {
     const id = Date.now().toString() + Math.random().toString(36).substring(2, 5);
     const newToast: ToastMessage = { id, title, message, type, image };
     setToasts(prev => [...prev, newToast]);
@@ -398,39 +412,46 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Auth & Account Methods
-  // DEMO ONLY — Replace with real authentication backend later
   const login = (email: string, _password?: string, rememberMe = true) => {
+    const nameParts = email.split('@')[0].split('.');
+    const first = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Priya';
+    const last = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'Sharma';
+    
+    const loggedUser: UserProfile = {
+      firstName: user?.firstName || first,
+      lastName: user?.lastName || last,
+      email: email,
+      phone: user?.phone || '+91 98765 43210',
+      dateOfBirth: '1996-04-18',
+      avatarUrl: user?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      memberSince: 'August 2026',
+      preferences: user?.preferences || {
+        emailNotifications: true,
+        newCollectionUpdates: true,
+        specialOffers: false,
+        orderSmsUpdates: true
+      }
+    };
+
+    setUser(loggedUser);
     setIsLoggedIn(true);
-    if (!user || user.email !== email) {
-      const nameParts = email.split('@')[0].split('.');
-      const first = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 'Priya';
-      const last = nameParts[1] ? nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 'Sharma';
-      
-      setUser({
-        firstName: first,
-        lastName: last,
-        email: email,
-        phone: '+91 98765 43210',
-        dateOfBirth: '1996-04-18',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-        memberSince: 'August 2026',
-        preferences: {
-          emailNotifications: true,
-          newCollectionUpdates: true,
-          specialOffers: false,
-          orderSmsUpdates: true
-        }
-      });
-    }
+
     if (rememberMe) {
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(true));
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(loggedUser));
     }
-    showToast('Welcome Back', `Signed in as ${user?.firstName || 'Priya'}`, 'success');
-    navigateTo('account', { accountTab: 'overview' });
+    showToast('Welcome Back', `Signed in as ${loggedUser.firstName}`, 'success');
+
+    if (pendingCheckout) {
+      setPendingCheckout(false);
+      setCurrentPage('checkout');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigateTo('account', { accountTab: 'overview' });
+    }
     return true;
   };
 
-  // DEMO ONLY — Replace with real authentication backend later
   const signup = (userData: { firstName: string; lastName: string; email: string; phone: string; password?: string }) => {
     const newUser: UserProfile = {
       firstName: userData.firstName.trim() || 'Priya',
@@ -452,14 +473,23 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(newUser));
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(true));
     showToast('Account Created', `Welcome to Maison Crochet, ${newUser.firstName}!`, 'success');
-    navigateTo('account', { accountTab: 'overview' });
+
+    if (pendingCheckout) {
+      setPendingCheckout(false);
+      setCurrentPage('checkout');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigateTo('account', { accountTab: 'overview' });
+    }
     return true;
   };
 
-  // DEMO ONLY — Replace with real authentication backend later
   const logout = () => {
     setIsLoggedIn(false);
+    setUser(null);
+    setPendingCheckout(false);
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(false));
+    localStorage.removeItem(USER_STORAGE_KEY);
     showToast('Logged Out', 'You have been safely signed out', 'info');
     navigateTo('home');
   };
@@ -716,9 +746,22 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const clearWishlist = () => setWishlist([]);
 
   // Place Order Simulation
-  // DEMO ONLY — Replace with real order API later
   const placeOrder = (paymentMethod: string, customAddress?: ShippingAddress): OrderDetails => {
+    if (!isLoggedIn) {
+      showToast('Sign In Required', 'You must be logged in to place an order.', 'error');
+      setPendingCheckout(true);
+      navigateTo('login');
+      throw new Error('User is not authenticated');
+    }
+
     const finalAddress = customAddress || shippingAddress;
+    
+    if (savedAddresses.length === 0 && (!finalAddress.addressLine1 || !finalAddress.fullName)) {
+      showToast('Delivery Address Required', 'Please add a delivery address before completing your order.', 'error');
+      navigateTo('checkout');
+      throw new Error('Missing delivery address');
+    }
+
     const items = [...cart];
     const subtotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
     

@@ -20,7 +20,8 @@ import {
   HelpCircle,
   Clock,
   Ruler,
-  Info
+  Info,
+  AlertCircle
 } from 'lucide-react';
 
 export const ProductDetailPage: React.FC = () => {
@@ -31,6 +32,7 @@ export const ProductDetailPage: React.FC = () => {
     isInWishlist, 
     openLightbox,
     navigateTo, 
+    showToast,
     recentlyViewed 
   } = useShop();
 
@@ -46,6 +48,10 @@ export const ProductDetailPage: React.FC = () => {
 
   const isSaved = isInWishlist(product.id);
   const currentColor = (product.colors && product.colors[selectedColorIndex]) || product.colors?.[0] || { name: 'Natural', hex: '#8C6F5A' };
+
+  const readyToShipQty = product.stock ?? 9;
+  const isQuantityExceeded = quantity > readyToShipQty;
+  const isQuantityInvalid = isQuantityExceeded || quantity <= 0;
 
   const discountPercent = product.comparePrice 
     ? Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100)
@@ -75,10 +81,26 @@ export const ProductDetailPage: React.FC = () => {
   };
 
   const handleAddToCart = () => {
+    if (isQuantityExceeded) {
+      showToast('Quantity Exceeded', 'Quantity cannot be greater than Ready to Ship quantity.', 'error');
+      return;
+    }
+    if (quantity <= 0) {
+      showToast('Invalid Quantity', 'Please enter a valid quantity of 1 or more.', 'error');
+      return;
+    }
     addToCart(product, currentColor, selectedSize, quantity);
   };
 
   const handleBuyNow = () => {
+    if (isQuantityExceeded) {
+      showToast('Quantity Exceeded', 'Quantity cannot be greater than Ready to Ship quantity.', 'error');
+      return;
+    }
+    if (quantity <= 0) {
+      showToast('Invalid Quantity', 'Please enter a valid quantity of 1 or more.', 'error');
+      return;
+    }
     addToCart(product, currentColor, selectedSize, quantity);
     navigateTo('checkout');
   };
@@ -311,32 +333,73 @@ export const ProductDetailPage: React.FC = () => {
               )}
 
               {/* Quantity & Inventory Status */}
-              <div className="pt-2 border-t border-[#E7DED2]/60 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-[#332C28]">Quantity:</span>
-                  <div className="flex items-center border border-[#E7DED2] rounded-xl bg-[#F8F4EE]">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-2 text-[#332C28] hover:bg-[#E7DED2] rounded-l-xl transition-colors"
-                      aria-label="Decrease quantity"
+              <div className="pt-2 border-t border-[#E7DED2]/60">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-[#332C28]">Quantity:</span>
+                    <div 
+                      className={`flex items-center border rounded-xl transition-all ${
+                        isQuantityExceeded
+                          ? 'border-[#C45A5A] bg-[#FFF0F0] ring-2 ring-[#C45A5A]/30'
+                          : 'border-[#E7DED2] bg-[#F8F4EE]'
+                      }`}
                     >
-                      <Minus className="w-3.5 h-3.5" />
-                    </button>
-                    <span className="px-4 text-xs font-bold text-[#332C28]">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="p-2 text-[#332C28] hover:bg-[#E7DED2] rounded-r-xl transition-colors"
-                      aria-label="Increase quantity"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="p-2 text-[#332C28] hover:bg-[#E7DED2] rounded-l-xl transition-colors cursor-pointer"
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <input
+                        type="number"
+                        id="pdp-quantity-input"
+                        min="1"
+                        max={readyToShipQty}
+                        value={quantity === 0 ? '' : quantity}
+                        onChange={(e) => {
+                          const val = e.target.value === '' ? 0 : parseInt(e.target.value, 10);
+                          setQuantity(isNaN(val) ? 0 : val);
+                        }}
+                        className={`w-12 sm:w-14 text-center text-xs font-bold bg-transparent focus:outline-none py-1.5 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${
+                          isQuantityExceeded ? 'text-[#C45A5A]' : 'text-[#332C28]'
+                        }`}
+                        aria-invalid={isQuantityExceeded}
+                        aria-describedby={isQuantityExceeded ? "quantity-error-msg" : undefined}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="p-2 text-[#332C28] hover:bg-[#E7DED2] rounded-r-xl transition-colors cursor-pointer"
+                        aria-label="Increase quantity"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
+
+                  <span className={`text-xs font-medium flex items-center gap-1 ${
+                    isQuantityExceeded ? 'text-[#C45A5A]' : 'text-[#5B734E]'
+                  }`}>
+                    <span className={`w-2 h-2 rounded-full ${
+                      isQuantityExceeded ? 'bg-[#C45A5A]' : 'bg-[#5B734E] animate-pulse'
+                    }`}></span>
+                    <span>{readyToShipQty} items ready to ship</span>
+                  </span>
                 </div>
 
-                <span className="text-xs text-[#5B734E] font-medium flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#5B734E] animate-pulse"></span>
-                  <span>{product.stock} items ready to ship</span>
-                </span>
+                {/* Red warning/error message directly below the Quantity field */}
+                {isQuantityExceeded && (
+                  <div 
+                    id="quantity-error-msg" 
+                    className="mt-2.5 flex items-start gap-1.5 text-xs text-[#C45A5A] font-semibold bg-[#FFF0F0] border border-[#C45A5A]/30 p-2.5 rounded-xl animate-fade-in"
+                    role="alert"
+                  >
+                    <AlertCircle className="w-4 h-4 text-[#C45A5A] flex-shrink-0 mt-0.5" />
+                    <span>Quantity cannot be greater than Ready to Ship quantity.</span>
+                  </div>
+                )}
               </div>
 
             </div>
@@ -347,7 +410,12 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   id="pdp-add-to-cart-btn"
                   onClick={handleAddToCart}
-                  className="w-full py-3.5 px-6 rounded-full bg-[#332C28] hover:bg-[#8C6F5A] text-[#F8F4EE] text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
+                  disabled={isQuantityInvalid}
+                  className={`w-full py-3.5 px-6 rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 ${
+                    isQuantityInvalid
+                      ? 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed shadow-none'
+                      : 'bg-[#332C28] hover:bg-[#8C6F5A] text-[#F8F4EE] cursor-pointer'
+                  }`}
                 >
                   <ShoppingBag className="w-4 h-4 text-[#D9A7A0]" />
                   <span>ADD TO CART</span>
@@ -356,7 +424,12 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   id="pdp-buy-now-btn"
                   onClick={handleBuyNow}
-                  className="w-full py-3.5 px-6 rounded-full bg-[#8C6F5A] hover:bg-[#725743] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
+                  disabled={isQuantityInvalid}
+                  className={`w-full py-3.5 px-6 rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 ${
+                    isQuantityInvalid
+                      ? 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed shadow-none'
+                      : 'bg-[#8C6F5A] hover:bg-[#725743] text-white cursor-pointer'
+                  }`}
                 >
                   <span>BUY NOW</span>
                   <ArrowRight className="w-4 h-4" />

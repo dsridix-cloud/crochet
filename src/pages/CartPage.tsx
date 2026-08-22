@@ -20,7 +20,8 @@ import {
   Clock,
   CheckCircle2,
   Lock,
-  ChevronRight
+  ChevronRight,
+  AlertCircle
 } from 'lucide-react';
 
 export const CartPage: React.FC = () => {
@@ -358,26 +359,40 @@ export const CartPage: React.FC = () => {
                     <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E7DED2]/60">
                       
                       {/* Quantity Stepper with large touch targets */}
-                      <div className="flex items-center border border-[#E7DED2] rounded-xl bg-[#F8F4EE] overflow-hidden shadow-2xs">
-                        <button
-                          id={`qty-minus-${item.id}`}
-                          onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
-                          className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center text-[#332C28] hover:bg-[#E7DED2] active:bg-[#D9A7A0]/30 transition-colors"
-                          aria-label="Decrease quantity"
-                        >
-                          <Minus className="w-3.5 h-3.5" />
-                        </button>
-                        <span className="w-8 text-center text-xs font-bold text-[#332C28]">
-                          {item.quantity}
-                        </span>
-                        <button
-                          id={`qty-plus-${item.id}`}
-                          onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
-                          className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center text-[#332C28] hover:bg-[#E7DED2] active:bg-[#D9A7A0]/30 transition-colors"
-                          aria-label="Increase quantity"
-                        >
-                          <Plus className="w-3.5 h-3.5" />
-                        </button>
+                      <div className="flex flex-col items-start gap-1">
+                        <div className={`flex items-center border rounded-xl bg-[#F8F4EE] overflow-hidden shadow-2xs transition-all ${
+                          item.quantity > (item.product?.stock ?? 9)
+                            ? 'border-[#C45A5A] ring-2 ring-[#C45A5A]/30 bg-[#FFF0F0]'
+                            : 'border-[#E7DED2]'
+                        }`}>
+                          <button
+                            id={`qty-minus-${item.id}`}
+                            onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
+                            className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center text-[#332C28] hover:bg-[#E7DED2] active:bg-[#D9A7A0]/30 transition-colors"
+                            aria-label="Decrease quantity"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <span className={`w-8 text-center text-xs font-bold ${
+                            item.quantity > (item.product?.stock ?? 9) ? 'text-[#C45A5A]' : 'text-[#332C28]'
+                          }`}>
+                            {item.quantity}
+                          </span>
+                          <button
+                            id={`qty-plus-${item.id}`}
+                            onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
+                            className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center text-[#332C28] hover:bg-[#E7DED2] active:bg-[#D9A7A0]/30 transition-colors"
+                            aria-label="Increase quantity"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                        {item.quantity > (item.product?.stock ?? 9) && (
+                          <div className="text-[11px] font-semibold text-[#C45A5A] flex items-center gap-1 mt-0.5 animate-fade-in">
+                            <AlertCircle className="w-3 h-3 text-[#C45A5A] flex-shrink-0" />
+                            <span>Quantity cannot be greater than Ready to Ship quantity.</span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Desktop Price Subtotal */}
@@ -676,7 +691,7 @@ export const CartPage: React.FC = () => {
               <div className="space-y-2 pt-2 border-t border-[#E7DED2]/60 text-[11px] text-[#332C28]/70">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-green-700 flex-shrink-0" />
-                  <span>256-Bit Encrypted Payment with UPI & Cards</span>
+                  <span>Encrypted Payment with UPI & Cards</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <RotateCcw className="w-4 h-4 text-[#8C6F5A] flex-shrink-0" />

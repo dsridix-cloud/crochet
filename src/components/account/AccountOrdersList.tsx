@@ -63,7 +63,7 @@ export const AccountOrdersList: React.FC = () => {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 mt-6 border-b border-[#E7DED2] scrollbar-none">
+        <div className="flex flex-wrap items-center gap-2 mt-6 border-b border-[#E7DED2] pb-3">
           {filterTabs.map((tab) => {
             const count = tab === 'All' 
               ? accountOrders.length 
