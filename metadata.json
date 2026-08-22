@@ -1,0 +1,6 @@
+{
+  "name": "Maison Crochet",
+  "description": "A luxury handmade crochet boutique and e-commerce demo featuring artisanal fashion, bags, home decor, interactive galleries, and custom order workshop.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

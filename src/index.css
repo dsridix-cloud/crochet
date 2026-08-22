@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #F8F4EE;
+    --ink: #332C28;
+    --beige: #E7DED2;
+    --pink: #D9A7A0;
+    --sage: #AAB5A0;
+    --brown: #8C6F5A;
+
+    --bg-primary: #F8F4EE;
+    --text-primary: #332C28;
+    --beige-secondary: #E7DED2;
+    --pink-soft: #D9A7A0;
+    --green-sage: #AAB5A0;
+    --brown-accent: #8C6F5A;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #332C28;
+    background-color: #F8F4EE;
+  }
+
+  body {
+    background-color: #F8F4EE;
+    color: #332C28;
+  }
+
+  h1, h2, h3, .serif, .font-serif-heading {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-editorial {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F4EE;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9A7A0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8C6F5A;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Image zoom effect on hover */
+.img-zoom-container {
+  overflow: hidden;
+}
+.img-zoom-container img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-zoom-container:hover img {
+  transform: scale(1.06);
+}
