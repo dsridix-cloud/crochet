@@ -33,7 +33,7 @@
                 <span class="badge badge-bestseller">BEST SELLER</span>
               {%- endif -%}
               {%- if on_sale -%}
-                <span class="badge badge-sale">{{ 'products.product.save_percent' | t: percent: save_pct }}</span>
+                <span class="badge badge-sale">SAVE {{ save_pct }}%</span>
               {%- endif -%}
               <span class="badge badge-editorial" style="background: rgba(255,255,255,0.9);">100% HANDMADE</span>
             </div>
@@ -89,7 +89,7 @@
               {{ current_variant.compare_at_price | money }}
             </span>
             <span class="badge badge-sale" style="font-size: 10px;">
-              {{ 'products.product.save_percent' | t: percent: save_pct }}
+              SAVE {{ save_pct }}%
             </span>
           {%- endif -%}
           <span style="font-size: 11px; color: rgba(51,44,40,0.6);">Inclusive of all taxes</span>
@@ -150,7 +150,7 @@
                 {% unless current_variant.available %}disabled{% endunless %}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A7A0" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                <span>{% if current_variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+                <span>{% if current_variant.available %}Add to Bag{% else %}Sold Out{% endif %}</span>
               </button>
 
               <button
@@ -196,7 +196,7 @@
           
           <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-sm); background: #FFF; overflow: hidden;">
             <button type="button" class="accordion-header" style="width: 100%; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: var(--color-text);">
-              <span>{{ 'products.product.details_tab' | t }}</span>
+              <span>Details & Craftsmanship</span>
               <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="accordion-content" style="display: none; padding: 0 16px 14px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
@@ -206,7 +206,7 @@
 
           <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-sm); background: #FFF; overflow: hidden;">
             <button type="button" class="accordion-header" style="width: 100%; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: var(--color-text);">
-              <span>{{ 'products.product.care_tab' | t }}</span>
+              <span>Yarn & Wash Care Instructions</span>
               <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="accordion-content" style="display: none; padding: 0 16px 14px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">

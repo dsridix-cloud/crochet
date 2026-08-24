@@ -5,11 +5,11 @@
     <!-- Filter / Sort Bar -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--color-beige); flex-wrap: wrap; gap: 16px;">
       <div style="font-size: 13px; color: rgba(51,44,40,0.7);">
-        {{ 'collections.general.items_count' | t: count: collection.products_count }}
+        Showing <strong style="color: var(--color-text);">{{ collection.products_count }}</strong> handmade artisan treasures
       </div>
 
       <div style="display: flex; align-items: center; gap: 12px;">
-        <label for="sort-by" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text);">{{ 'collections.general.sort_by' | t }}:</label>
+        <label for="sort-by" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text);">Sort By:</label>
         <select
           id="sort-by"
           onchange="location.href = window.location.pathname + '?sort_by=' + this.value;"
@@ -17,11 +17,11 @@
           style="padding: 6px 12px; font-size: 12px; width: auto; border-radius: var(--radius-sm);"
         >
           {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-          <option value="manual" {% if sort_by == 'manual' %}selected{% endif %}>{{ 'collections.sorting.featured' | t }}</option>
-          <option value="best-selling" {% if sort_by == 'best-selling' %}selected{% endif %}>{{ 'collections.sorting.best_selling' | t }}</option>
-          <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>{{ 'collections.sorting.price_ascending' | t }}</option>
-          <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>{{ 'collections.sorting.price_descending' | t }}</option>
-          <option value="created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>{{ 'collections.sorting.created_descending' | t }}</option>
+          <option value="manual" {% if sort_by == 'manual' %}selected{% endif %}>Featured</option>
+          <option value="best-selling" {% if sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+          <option value="price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+          <option value="price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+          <option value="created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
         </select>
       </div>
     </div>
@@ -32,9 +32,9 @@
         {% render 'product-card', product_card_product: product %}
       {%- else -%}
         <div style="grid-column: 1 / -1; text-align: center; padding: 64px 20px;">
-          <h3 class="heading-serif" style="font-size: 22px; margin-bottom: 8px;">{{ 'collections.general.no_products' | t }}</h3>
+          <h3 class="heading-serif" style="font-size: 22px; margin-bottom: 8px;">No pieces found</h3>
           <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-bottom: 20px;">Try clearing filters or browse another category.</p>
-          <a href="/collections/all" class="btn btn-primary">{{ 'collections.general.all_collections' | t }}</a>
+          <a href="/collections/all" class="btn btn-primary">View All Products</a>
         </div>
       {%- endfor -%}
     </div>

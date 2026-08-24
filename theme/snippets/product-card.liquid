@@ -41,7 +41,7 @@
         <span class="badge badge-new">NEW DROP</span>
       {%- endif -%}
       {%- if on_sale -%}
-        <span class="badge badge-sale">{{ 'products.product.save_percent' | t: percent: save_pct }}</span>
+        <span class="badge badge-sale">SAVE {{ save_pct }}%</span>
       {%- endif -%}
     </div>
 
@@ -69,7 +69,7 @@
         style="flex: 1; padding: 8px 12px; font-size: 11px; background: rgba(255,255,255,0.95);"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #8C6F5A;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        <span>{{ 'products.product.quick_view' | t }}</span>
+        <span>Quick View</span>
       </button>
 
       {%- if product_card_product.available -%}
@@ -83,7 +83,7 @@
             title="Quick Add to Bag"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #D9A7A0;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            <span>{{ 'products.product.quick_add' | t }}</span>
+            <span>Quick Add</span>
           </button>
         </form>
       {%- endif -%}

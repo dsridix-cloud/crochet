@@ -4,12 +4,12 @@
 
 <div id="cart-drawer-backdrop" class="drawer-backdrop"></div>
 
-<div id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="{{ 'cart.title' | t }}">
+<div id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Your Cart">
   <!-- Drawer Header -->
   <div style="padding: 18px 20px; background: #FFF; border-bottom: 1px solid var(--color-beige); display: flex; justify-content: space-between; align-items: center;">
     <div style="display: flex; align-items: center; gap: 8px;">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8C6F5A" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-text);">{{ 'cart.title' | t }}</h2>
+      <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-text);">Your Shopping Bag</h2>
       <span class="cart-count-badge badge badge-editorial" style="font-size: 11px;">{{ cart.item_count }}</span>
     </div>
     <button type="button" data-action="close-cart-drawer" style="color: rgba(51,44,40,0.6); padding: 4px;" aria-label="Close cart drawer">
@@ -37,14 +37,14 @@
   <!-- Drawer Footer / Checkout -->
   <div style="background: #FFF; border-top: 1px solid var(--color-beige); padding: 20px;">
     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
-      <span style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(51,44,40,0.7);">{{ 'cart.subtotal' | t }}</span>
+      <span style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(51,44,40,0.7);">Subtotal</span>
       <span id="cart-drawer-subtotal" style="font-size: 18px; font-weight: 700; color: var(--color-text);">{{ cart.total_price | money }}</span>
     </div>
-    <p style="font-size: 11px; color: rgba(51,44,40,0.55); margin-bottom: 16px;">{{ 'cart.shipping_at_checkout' | t }}</p>
+    <p style="font-size: 11px; color: rgba(51,44,40,0.55); margin-bottom: 16px;">Taxes & shipping calculated at checkout.</p>
     
     <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form">
       <button type="submit" name="checkout" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 12px; border-radius: 999px; justify-content: center; gap: 8px;">
-        <span>{{ 'cart.checkout' | t }}</span>
+        <span>Secure Checkout</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </form>

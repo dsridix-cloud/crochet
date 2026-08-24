@@ -6,7 +6,7 @@
       <div>
         <span class="badge badge-editorial" style="margin-bottom: 6px;">PATRON ACCOUNT</span>
         <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 2.6rem);">
-          {{ 'customer.account.welcome' | t }}, {{ customer.first_name | default: 'Artisan Collector' }}
+          Welcome back, {{ customer.first_name | default: 'Artisan Collector' }}
         </h1>
       </div>
 
@@ -15,7 +15,7 @@
           View Addresses ({{ customer.addresses_count }})
         </a>
         <a href="{{ routes.account_logout_url }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 11px; color: #8C6F5A;">
-          {{ 'customer.account.log_out' | t }}
+          Log out
         </a>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="lg:col-span-8">
         <div style="background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 24px; box-shadow: var(--shadow-subtle);">
           <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-beige);">
-            {{ 'customer.account.orders' | t }}
+            Order History
           </h2>
 
           {%- paginate customer.orders by 10 -%}
@@ -36,11 +36,11 @@
                 <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
                   <thead>
                     <tr style="border-bottom: 1px solid var(--color-beige); color: #8C6F5A; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">
-                      <th style="padding: 10px 12px;">{{ 'customer.orders.order_number' | t }}</th>
-                      <th style="padding: 10px 12px;">{{ 'customer.orders.date' | t }}</th>
-                      <th style="padding: 10px 12px;">{{ 'customer.orders.payment_status' | t }}</th>
-                      <th style="padding: 10px 12px;">{{ 'customer.orders.fulfillment_status' | t }}</th>
-                      <th style="padding: 10px 12px; text-align: right;">{{ 'customer.orders.total' | t }}</th>
+                      <th style="padding: 10px 12px;">Order</th>
+                      <th style="padding: 10px 12px;">Date</th>
+                      <th style="padding: 10px 12px;">Payment</th>
+                      <th style="padding: 10px 12px;">Fulfillment</th>
+                      <th style="padding: 10px 12px; text-align: right;">Total</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -70,7 +70,7 @@
               </div>
             {%- else -%}
               <div style="text-align: center; padding: 40px 20px;">
-                <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-bottom: 16px;">{{ 'customer.orders.no_orders' | t }}</p>
+                <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-bottom: 16px;">You haven't placed any orders yet.</p>
                 <a href="/collections/all" class="btn btn-primary" style="font-size: 11px;">Start Exploring</a>
               </div>
             {%- endif -%}
@@ -82,7 +82,7 @@
       <div class="lg:col-span-4">
         <div style="background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 24px; box-shadow: var(--shadow-subtle); display: flex; flex-direction: column; gap: 16px;">
           <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-text); padding-bottom: 12px; border-bottom: 1px solid var(--color-beige);">
-            {{ 'customer.account.profile' | t }}
+            Account Details
           </h2>
 
           <div>
@@ -107,7 +107,7 @@
           </div>
 
           <a href="{{ routes.account_addresses_url }}" class="btn btn-secondary" style="margin-top: 8px; font-size: 11px; text-align: center; justify-content: center;">
-            {{ 'customer.account.addresses' | t }}
+            Manage Addresses
           </a>
         </div>
       </div>

@@ -7,10 +7,10 @@
       <div style="text-align: center; margin-bottom: 28px;">
         <span class="badge badge-editorial" style="margin-bottom: 8px;">ARTISAN CLUB</span>
         <h1 class="heading-serif" style="font-size: 26px;">
-          {{ 'customer.login.title' | t }}
+          Login
         </h1>
         <p style="font-size: 13px; color: rgba(51,44,40,0.7); margin-top: 4px;">
-          {{ 'customer.login.subtitle' | t }}
+          Access your orders, saved addresses, and wishlist.
         </p>
       </div>
 
@@ -20,27 +20,28 @@
 
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <div>
-            <label for="CustomerEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">{{ 'customer.login.email' | t }}</label>
+            <label for="CustomerEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Email Address</label>
             <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required class="form-input">
           </div>
 
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <label for="CustomerPassword" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">{{ 'customer.login.password' | t }}</label>
-              <a href="#recover" onclick="document.getElementById('login-form-block').style.display='none'; document.getElementById('recover-form-block').style.display='block';" style="font-size: 11px; color: var(--color-brown); font-weight: 600;">{{ 'customer.login.forgot_password' | t }}</a>
+              <label for="CustomerPassword" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Password</label>
+              <a href="#recover" onclick="document.getElementById('login-form-block').style.display='none'; document.getElementById('recover-form-block').style.display='block';" style="font-size: 11px; color: var(--color-brown); font-weight: 600;">Forgot your password?</a>
             </div>
             <input type="password" name="customer[password]" id="CustomerPassword" required class="form-input">
           </div>
 
           <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 12px; justify-content: center; width: 100%; margin-top: 6px;">
-            <span>{{ 'customer.login.sign_in' | t }}</span>
+            <span>Sign In</span>
           </button>
         </div>
       {% endform %}
 
       <!-- Register Link -->
       <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-beige); text-align: center; font-size: 13px; color: rgba(51,44,40,0.75);">
-        <a href="{{ routes.account_register_url }}" style="color: var(--color-brown); font-weight: 700; margin-left: 4px;">{{ 'customer.login.create_account' | t }}</a>
+        <span>Don't have an account?</span>
+        <a href="{{ routes.account_register_url }}" style="color: var(--color-brown); font-weight: 700; margin-left: 4px;">Create an account</a>
       </div>
 
     </div>

@@ -17,9 +17,9 @@
   --color-black: #1A1715;
 
   /* Typography */
-  --font-heading: 'Playfair Display', 'Noto Serif Devanagari', 'Cormorant Garamond', Georgia, serif;
-  --font-editorial: 'Cormorant Garamond', 'Noto Serif Devanagari', 'Playfair Display', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-editorial: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Spacing & Radii */
   --radius-sm: 8px;

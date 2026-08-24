@@ -7,10 +7,10 @@
       <div style="text-align: center; margin-bottom: 28px;">
         <span class="badge badge-editorial" style="margin-bottom: 8px;">JOIN THE COLLECTIVE</span>
         <h1 class="heading-serif" style="font-size: 26px;">
-          {{ 'customer.register.title' | t }}
+          Create Account
         </h1>
         <p style="font-size: 13px; color: rgba(51,44,40,0.7); margin-top: 4px;">
-          {{ 'customer.register.subtitle' | t }}
+          Create an account to track handcrafted commissions.
         </p>
       </div>
 
@@ -20,34 +20,35 @@
 
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <div>
-            <label for="RegisterFirstName" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">{{ 'customer.register.first_name' | t }}</label>
+            <label for="RegisterFirstName" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">First Name</label>
             <input type="text" name="customer[first_name]" id="RegisterFirstName" class="form-input">
           </div>
 
           <div>
-            <label for="RegisterLastName" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">{{ 'customer.register.last_name' | t }}</label>
+            <label for="RegisterLastName" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Last Name</label>
             <input type="text" name="customer[last_name]" id="RegisterLastName" class="form-input">
           </div>
 
           <div>
-            <label for="RegisterEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">{{ 'customer.register.email' | t }} *</label>
+            <label for="RegisterEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Email Address *</label>
             <input type="email" name="customer[email]" id="RegisterEmail" required class="form-input">
           </div>
 
           <div>
-            <label for="RegisterPassword" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">{{ 'customer.register.password' | t }} *</label>
+            <label for="RegisterPassword" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Password *</label>
             <input type="password" name="customer[password]" id="RegisterPassword" required class="form-input">
           </div>
 
           <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 12px; justify-content: center; width: 100%; margin-top: 6px;">
-            <span>{{ 'customer.register.submit' | t }}</span>
+            <span>Create Account</span>
           </button>
         </div>
       {% endform %}
 
       <!-- Login Link -->
       <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-beige); text-align: center; font-size: 13px; color: rgba(51,44,40,0.75);">
-        <a href="{{ routes.account_login_url }}" style="color: var(--color-brown); font-weight: 700; margin-left: 4px;">{{ 'customer.register.already_have_account' | t }}</a>
+        <span>Already have an account?</span>
+        <a href="{{ routes.account_login_url }}" style="color: var(--color-brown); font-weight: 700; margin-left: 4px;">Sign in</a>
       </div>
 
     </div>
