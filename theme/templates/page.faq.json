@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "faq": {
+      "type": "main-faq",
+      "settings": {}
+    },
+    "custom_order_banner": {
+      "type": "custom-order-banner",
+      "settings": {
+        "badge": "NEED MORE HELP?",
+        "heading": "Still have a question? Contact our studio directly."
+      }
+    }
+  },
+  "order": [
+    "faq",
+    "custom_order_banner"
+  ]
+}

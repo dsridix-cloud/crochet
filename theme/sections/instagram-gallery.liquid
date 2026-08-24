@@ -1,0 +1,67 @@
+<section class="instagram-gallery-section" style="padding: 72px 0; background: #FFF; border-top: 1px solid var(--color-beige);">
+  <div class="container">
+    
+    <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; gap: 12px;" class="sm:flex-row sm:items-end">
+      <div>
+        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--color-brown);">
+          {{ section.settings.subheading | default: '@maisoncrochet.studio' }}
+        </span>
+        <h2 class="heading-serif" style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-top: 4px;">
+          {{ section.settings.heading | default: 'Follow Our Daily Stitches' }}
+        </h2>
+      </div>
+
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 8px 18px; font-size: 11px;">
+        <span>Follow on Instagram</span>
+      </a>
+    </div>
+
+    <!-- 4-6 Photo Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; position: relative;">
+        <img src="https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=600&q=80" alt="Crochet feed 1" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; position: relative;">
+        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" alt="Crochet feed 2" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; position: relative;">
+        <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80" alt="Crochet feed 3" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; position: relative;">
+        <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80" alt="Crochet feed 4" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; position: relative;">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" alt="Crochet feed 5" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; position: relative;">
+        <img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?auto=format&fit=crop&w=600&q=80" alt="Crochet feed 6" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "@maisoncrochet.studio"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Follow Our Daily Stitches"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Gallery"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "custom_order": {
+      "type": "main-custom-order",
+      "settings": {}
+    },
+    "faq_section": {
+      "type": "faq-section",
+      "settings": {
+        "subheading": "Custom Orders",
+        "heading": "Frequently Asked Questions"
+      }
+    }
+  },
+  "order": [
+    "custom_order",
+    "faq_section"
+  ]
+}

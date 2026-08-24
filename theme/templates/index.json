@@ -1,0 +1,104 @@
+{
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "badge": "SLOW FASHION · ARTISANAL QUALITY",
+        "heading": "Artisan Crochet for the <span class=\"font-editorial\" style=\"font-style: italic; font-weight: 400; color: #8C6F5A;\">Modern Soul</span>.",
+        "subheading": "Discover modern handmade slow fashion, bespoke tops, textured tote bags, and heirloom amigurumi toys. Each item is hand-stitched loop by loop in Jaipur using 100% natural organic cotton yarn.",
+        "primary_button_text": "EXPLORE THE COLLECTION",
+        "primary_button_link": "/collections/all",
+        "secondary_button_text": "CUSTOM ORDER",
+        "secondary_button_link": "/pages/custom-orders"
+      }
+    },
+    "collection_list": {
+      "type": "collection-list",
+      "settings": {
+        "subheading": "Mindfully Crafted",
+        "heading": "Shop by Category",
+        "description": "Each collection is designed for conscious living, pairing timeless crochet motifs with contemporary silhouettes."
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "subheading": "Customer Treasures",
+        "heading": "Our Favorites",
+        "products_to_show": 8,
+        "view_all_text": "View All Pieces"
+      }
+    },
+    "handmade_story": {
+      "type": "handmade-story",
+      "settings": {
+        "badge": "MADE BY HAND",
+        "heading": "Every loop tells a story.",
+        "text_1": "Our pieces are carefully crocheted by hand, one stitch at a time. In a world of fleeting fast-fashion, we believe handmade products should feel personal, timeless, and special.",
+        "text_2": "By supporting our collective, you provide sustainable, dignified work for women artisans across Rajasthan, preserving heritage textile crafts for future generations.",
+        "button_text": "OUR STORY",
+        "button_link": "/pages/about"
+      }
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "subheading": "Our Core Promise",
+        "heading": "Why Choose Maison Crochet",
+        "description": "We focus on craftsmanship over mass production, bringing thoughtful artisanal quality to your everyday wardrobe."
+      }
+    },
+    "custom_order_banner": {
+      "type": "custom-order-banner",
+      "settings": {
+        "badge": "BESPOKE ARTISAN SERVICE",
+        "heading": "Have a specific idea in mind? Let's crochet it together.",
+        "text": "From custom bridal shrugs and heirloom baby blankets to specific colorways for your home, our studio artisans craft one-of-a-kind bespoke commissions.",
+        "button_text": "START BESPOKE ORDER",
+        "button_link": "/pages/custom-orders"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "subheading": "Client Stories",
+        "heading": "Loved by Conscious Souls"
+      }
+    },
+    "instagram_gallery": {
+      "type": "instagram-gallery",
+      "settings": {
+        "subheading": "@maisoncrochet.studio",
+        "heading": "Follow Our Daily Stitches"
+      }
+    },
+    "faq_section": {
+      "type": "faq-section",
+      "settings": {
+        "subheading": "Got Questions?",
+        "heading": "Frequently Asked Questions"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "badge": "STUDIO DISPATCHES",
+        "heading": "Join the Maison Circle",
+        "text": "Subscribe to receive invitations to private seasonal drops, behind-the-scenes artisan workshop updates, and ₹200 off your first order.",
+        "button_text": "JOIN THE CIRCLE"
+      }
+    }
+  },
+  "order": [
+    "hero_banner",
+    "collection_list",
+    "featured_collection",
+    "handmade_story",
+    "why_choose_us",
+    "custom_order_banner",
+    "testimonials",
+    "instagram_gallery",
+    "faq_section",
+    "newsletter"
+  ]
+}

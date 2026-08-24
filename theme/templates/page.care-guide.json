@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "care_guide": {
+      "type": "main-care-guide",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "badge": "STUDIO DISPATCHES",
+        "heading": "Join the Maison Circle"
+      }
+    }
+  },
+  "order": [
+    "care_guide",
+    "newsletter"
+  ]
+}

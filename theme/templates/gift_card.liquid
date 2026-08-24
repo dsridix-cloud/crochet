@@ -1,0 +1,22 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Your Gift Card - {{ shop.name }}</title>
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body style="background: var(--color-bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px;">
+    <div style="background: #FFF; border-radius: var(--radius-xl); border: 1px solid var(--color-beige); padding: 40px; max-width: 500px; width: 100%; text-align: center; box-shadow: var(--shadow-hover);">
+      <span class="badge badge-editorial" style="margin-bottom: 12px;">ARTISAN GIFT CARD</span>
+      <h1 class="heading-serif" style="font-size: 26px; margin-bottom: 8px;">{{ shop.name }}</h1>
+      <div style="font-size: 32px; font-weight: 700; color: var(--color-brown); margin: 20px 0;">{{ gift_card.balance | money_with_currency }}</div>
+      <div style="background: var(--color-bg); padding: 14px; border-radius: var(--radius-md); font-family: monospace; font-size: 18px; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 20px;">
+        {{ gift_card.code | format_code }}
+      </div>
+      <p style="font-size: 13px; color: rgba(51,44,40,0.7); margin-bottom: 24px;">Use this code at checkout to redeem your artisanal gift card.</p>
+      <a href="{{ shop.url }}" class="btn btn-primary" style="justify-content: center; width: 100%;">START SHOPPING</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,182 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search crochet tops, bags, amigurumi...",
+      "submit": "Search",
+      "heading": "Search Our Studio",
+      "results_with_count": {
+        "one": "{{ count }} piece found for \"{{ terms }}\"",
+        "other": "{{ count }} pieces found for \"{{ terms }}\""
+      },
+      "no_results": "No crochet pieces found matching your search.",
+      "view_all": "View all results"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "shop": "Shop",
+      "cart": "Cart"
+    },
+    "share": "Share this piece",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{ number }}"
+    }
+  },
+  "announcement": {
+    "free_shipping": "Free shipping on orders above ₹999",
+    "origin": "Slow-crafted in Jaipur, India"
+  },
+  "header": {
+    "menu": "Menu",
+    "search": "Search",
+    "account": "Account",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "studio_tag": "Jaipur Artisanal Studio",
+    "close": "Close navigation"
+  },
+  "footer": {
+    "handcrafted_title": "100% Hand Crocheted",
+    "handcrafted_desc": "No machines used. Mindfully crafted stitch by stitch.",
+    "shipping_title": "Free Shipping Over ₹999",
+    "shipping_desc": "Express, eco-friendly plastic-free delivery across India.",
+    "empowerment_title": "Artisan Empowerment",
+    "empowerment_desc": "Fair wages and flexible livelihood for women knitters.",
+    "materials_title": "Natural Pure Yarns",
+    "materials_desc": "Organic cotton, breathable bamboo & soft milk fibers.",
+    "about_title": "About Maison Crochet",
+    "newsletter_title": "Stay in the Loop",
+    "newsletter_subtext": "Get first access to new handmade drops, special offers, and behind-the-scenes artisan stories.",
+    "newsletter_placeholder": "Enter your email address",
+    "subscribe": "Subscribe",
+    "copyright": "All rights reserved. Slow Fashion Made in Jaipur."
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "buy_it_now": "Buy It Now",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "save_percent": "Save {{ percent }}%",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "unit_price": "Unit price",
+      "quantity": "Quantity",
+      "quick_view": "Quick View",
+      "quick_add": "Quick Add",
+      "ready_to_ship": "Ready to Ship",
+      "slow_crafted_time": "Handmade on order: 3–5 business days",
+      "details_tab": "Artisan Details",
+      "sizing_tab": "Size & Fit Guide",
+      "care_tab": "Care Instructions",
+      "reviews_tab": "Customer Reviews",
+      "related_products": "You May Also Love",
+      "in_stock": "In Stock",
+      "out_of_stock": "Out of Stock"
+    }
+  },
+  "cart": {
+    "title": "Your Shopping Bag",
+    "empty": "Your cart is feeling a little empty",
+    "empty_subtext": "Discover our handcrafted tops, heirloom amigurumi toys, and woven bags made slowly with natural yarn.",
+    "explore_btn": "Explore Collection",
+    "subtotal": "Subtotal",
+    "shipping_at_checkout": "Taxes & standard shipping calculated at checkout",
+    "checkout": "Proceed to Checkout",
+    "view_cart": "View Cart",
+    "free_shipping_unlocked": "You've unlocked FREE Standard Shipping!",
+    "free_shipping_needed": "Add {{ amount }} more for FREE Shipping",
+    "note": "Special instructions for artisan workshop",
+    "note_placeholder": "E.g., Gift note, specific color request or delivery preference...",
+    "remove": "Remove item",
+    "quantity_decrease": "Decrease quantity",
+    "quantity_increase": "Increase quantity"
+  },
+  "collections": {
+    "general": {
+      "all_collections": "All Collections",
+      "catalog": "Catalog",
+      "items_count": {
+        "one": "{{ count }} piece",
+        "other": "{{ count }} pieces in this collection"
+      },
+      "no_products": "No products found in this collection.",
+      "sort_by": "Sort by",
+      "filter_by": "Filter by",
+      "clear_all": "Clear all filters"
+    },
+    "sorting": {
+      "featured": "Featured",
+      "best_selling": "Best Selling",
+      "price_ascending": "Price: Low to High",
+      "price_descending": "Price: High to Low",
+      "title_ascending": "Alphabetically, A-Z",
+      "title_descending": "Alphabetically, Z-A",
+      "created_descending": "Date, new to old",
+      "created_ascending": "Date, old to new"
+    }
+  },
+  "custom_order": {
+    "badge": "Bespoke Artisan Workshop",
+    "title": "Custom Crochet Studio",
+    "subtitle": "Have a specific design, custom color combination, or bespoke dimensions in mind? Our Jaipur master knitters will hand-crochet it exclusively for you.",
+    "form_name": "Full Name",
+    "form_email": "Email Address",
+    "form_phone": "WhatsApp / Phone Number",
+    "form_category": "Crochet Category",
+    "form_color": "Desired Color Palette",
+    "form_dimensions": "Measurements / Sizing Notes",
+    "form_budget": "Estimated Budget Range",
+    "form_notes": "Design Details & Custom Notes",
+    "submit": "Submit Bespoke Request",
+    "success_title": "Custom Request Received!",
+    "success_msg": "Our master knitter will review your request and get back within 24 hours."
+  },
+  "customer": {
+    "account": {
+      "title": "My Account",
+      "welcome": "Welcome back",
+      "orders": "Order History",
+      "track_order": "Track Order",
+      "addresses": "Saved Addresses",
+      "profile": "Profile Details",
+      "log_out": "Log Out"
+    },
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to access your crochet orders and saved favorites",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "sign_in": "Sign In",
+      "create_account": "Don't have an account? Create one"
+    },
+    "register": {
+      "title": "Join Maison Crochet",
+      "subtitle": "Create an account to track orders, save wishlist pieces, and enjoy member drops",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create Account",
+      "already_have_account": "Already have an account? Sign in"
+    },
+    "orders": {
+      "order_number": "Order #",
+      "date": "Date",
+      "payment_status": "Payment Status",
+      "fulfillment_status": "Fulfillment Status",
+      "total": "Total",
+      "no_orders": "You haven't placed any orders yet."
+    },
+    "addresses": {
+      "title": "Saved Addresses",
+      "add_new": "Add New Address",
+      "edit": "Edit",
+      "delete": "Delete",
+      "default": "Default Address"
+    }
+  }
+}

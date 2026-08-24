@@ -1,0 +1,147 @@
+<section class="hero-banner" style="background-color: rgba(231,222,210,0.4); border-bottom: 1px solid rgba(231,222,210,0.8); padding-top: 32px; padding-bottom: 64px; position: relative; overflow: hidden;">
+  <div class="container">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12" style="align-items: center;">
+      
+      <!-- Editorial Left Content -->
+      <div class="lg:col-span-6" style="display: flex; flex-direction: column; gap: 20px; z-index: 10;">
+        <div>
+          <span class="badge badge-editorial">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9A7A0" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span>{{ section.settings.badge | default: 'SLOW FASHION · ARTISANAL QUALITY' }}</span>
+          </span>
+        </div>
+
+        <h1 class="heading-serif" style="font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.12; font-weight: 700; color: var(--color-text);">
+          {{ section.settings.heading | default: 'Artisan Crochet for the <span class="font-editorial" style="font-style: italic; font-weight: 400; color: #8C6F5A;">Modern Soul</span>.' }}
+        </h1>
+
+        <p style="font-size: 15px; color: rgba(51,44,40,0.8); line-height: 1.6; max-width: 520px; font-weight: 300;">
+          {{ section.settings.subheading | default: 'Discover modern handmade slow fashion, bespoke tops, textured tote bags, and heirloom amigurumi toys. Each item is hand-stitched loop by loop in Jaipur using 100% natural organic cotton yarn.' }}
+        </p>
+
+        <!-- CTA Buttons -->
+        <div style="display: flex; flex-wrap: wrap; gap: 14px; padding-top: 8px;">
+          <a href="{{ section.settings.primary_button_link | default: '/collections/all' }}" class="btn btn-primary">
+            <span>{{ section.settings.primary_button_text | default: 'EXPLORE THE COLLECTION' }}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+
+          <a href="{{ section.settings.secondary_button_link | default: '/pages/custom-orders' }}" class="btn btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9A7A0" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            <span>{{ section.settings.secondary_button_text | default: 'CUSTOM ORDER' }}</span>
+          </a>
+        </div>
+
+        <!-- Trust Micro-Metrics -->
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 12px; color: rgba(51,44,40,0.7); padding-top: 20px; border-top: 1px solid var(--color-beige);">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-sage);"></span>
+            <span>100% Natural Yarns</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-pink);"></span>
+            <span>Over 2,400+ Stitches per Bag</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-brown);"></span>
+            <span>Fair Artisan Livelihood</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Editorial Right Hero Image -->
+      <div class="lg:col-span-6" style="position: relative;">
+        <div style="position: relative; max-width: 520px; margin: 0 auto;">
+          <div style="aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden; box-shadow: 0 20px 40px rgba(51,44,40,0.15); border: 4px solid #FFF; background: var(--color-beige); position: relative;">
+            {%- if section.settings.image != blank -%}
+              <img
+                src="{{ section.settings.image | image_url: width: 1200 }}"
+                alt="{{ section.settings.image.alt | default: 'Artisanal crochet collection' | escape }}"
+                loading="eager"
+                style="width: 100%; height: 100%; object-fit: cover;"
+              >
+            {%- else -%}
+              <img
+                src="https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=1200&q=85"
+                alt="Artisan crochet top lifestyle"
+                style="width: 100%; height: 100%; object-fit: cover;"
+              >
+            {%- endif -%}
+
+            <!-- Floating Badge Inside Image -->
+            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; padding: 14px 18px; border-radius: var(--radius-md); background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.5); box-shadow: var(--shadow-hover); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--color-brown);">Featured Drop</div>
+                <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--color-text);">Cloud Petal Halter Top</div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--color-text);">₹1,499</div>
+              </div>
+              <a href="/collections/all" class="btn btn-primary" style="padding: 8px 16px; font-size: 11px;">
+                View Piece
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Top Badge Text",
+      "default": "SLOW FASHION · ARTISANAL QUALITY"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (HTML Supported)",
+      "default": "Artisan Crochet for the <span class=\"font-editorial\" style=\"font-style: italic; font-weight: 400; color: #8C6F5A;\">Modern Soul</span>."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover modern handmade slow fashion, bespoke tops, textured tote bags, and heirloom amigurumi toys. Each item is hand-stitched loop by loop in Jaipur using 100% natural organic cotton yarn."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary Button Text",
+      "default": "EXPLORE THE COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary Button Text",
+      "default": "CUSTOM ORDER"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,37 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_dynamic_checkout": true
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "subheading": "Complete Your Look",
+        "heading": "You May Also Treasure"
+      }
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "subheading": "Our Craftsmanship",
+        "heading": "Why Choose Maison Crochet"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "badge": "STUDIO DISPATCHES",
+        "heading": "Join the Maison Circle"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations",
+    "why_choose_us",
+    "newsletter"
+  ]
+}

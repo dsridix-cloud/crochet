@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "about": {
+      "type": "main-about",
+      "settings": {}
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "subheading": "Values",
+        "heading": "Why Choose Maison Crochet"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "badge": "STUDIO DISPATCHES",
+        "heading": "Join the Maison Circle"
+      }
+    }
+  },
+  "order": [
+    "about",
+    "why_choose_us",
+    "newsletter"
+  ]
+}

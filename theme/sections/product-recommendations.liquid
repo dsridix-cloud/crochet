@@ -1,0 +1,46 @@
+<section class="product-recommendations-section" style="padding: 64px 0; background: #FFF; border-top: 1px solid var(--color-beige);">
+  <div class="container">
+    
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 40px;">
+      <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--color-brown);">
+        {{ section.settings.subheading | default: 'Complete Your Look' }}
+      </span>
+      <h2 class="heading-serif" style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-top: 4px;">
+        {{ section.settings.heading | default: 'You May Also Treasure' }}
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        {%- for product in recommendations.products limit: 4 -%}
+          {% render 'product-card', product_card_product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in collections.all.products limit: 4 -%}
+          {% render 'product-card', product_card_product: product %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Recommendations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Complete Your Look"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You May Also Treasure"
+    }
+  ]
+}
+{% endschema %}

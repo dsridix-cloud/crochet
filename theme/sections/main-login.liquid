@@ -1,0 +1,56 @@
+<section class="customer-login-section" style="padding: 64px 0 96px; background: var(--color-bg);">
+  <div class="container" style="max-width: 500px;">
+    
+    <div style="background: #FFF; border-radius: var(--radius-xl); border: 1px solid var(--color-beige); padding: 36px 32px; box-shadow: var(--shadow-subtle);">
+      
+      <!-- Login Header -->
+      <div style="text-align: center; margin-bottom: 28px;">
+        <span class="badge badge-editorial" style="margin-bottom: 8px;">ARTISAN CLUB</span>
+        <h1 class="heading-serif" style="font-size: 26px;">
+          {{ 'customer.login.title' | t }}
+        </h1>
+        <p style="font-size: 13px; color: rgba(51,44,40,0.7); margin-top: 4px;">
+          {{ 'customer.login.subtitle' | t }}
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      {% form 'customer_login' %}
+        {{ form.errors | default_errors }}
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label for="CustomerEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">{{ 'customer.login.email' | t }}</label>
+            <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required class="form-input">
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label for="CustomerPassword" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">{{ 'customer.login.password' | t }}</label>
+              <a href="#recover" onclick="document.getElementById('login-form-block').style.display='none'; document.getElementById('recover-form-block').style.display='block';" style="font-size: 11px; color: var(--color-brown); font-weight: 600;">{{ 'customer.login.forgot_password' | t }}</a>
+            </div>
+            <input type="password" name="customer[password]" id="CustomerPassword" required class="form-input">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 12px; justify-content: center; width: 100%; margin-top: 6px;">
+            <span>{{ 'customer.login.sign_in' | t }}</span>
+          </button>
+        </div>
+      {% endform %}
+
+      <!-- Register Link -->
+      <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-beige); text-align: center; font-size: 13px; color: rgba(51,44,40,0.75);">
+        <a href="{{ routes.account_register_url }}" style="color: var(--color-brown); font-weight: 700; margin-left: 4px;">{{ 'customer.login.create_account' | t }}</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Login",
+  "settings": []
+}
+{% endschema %}

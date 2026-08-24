@@ -1,0 +1,33 @@
+<section class="404-section" style="padding: 100px 0; background: var(--color-bg); text-align: center;">
+  <div class="container" style="max-width: 600px;">
+    
+    <div style="font-family: var(--font-heading); font-size: 72px; font-weight: 700; color: var(--color-brown); line-height: 1; margin-bottom: 16px;">
+      404
+    </div>
+
+    <h1 class="heading-serif" style="font-size: 28px; margin-bottom: 12px;">
+      {{ 'templates.404.title' | t }}
+    </h1>
+
+    <p style="font-size: 15px; color: rgba(51,44,40,0.75); line-height: 1.6; margin-bottom: 32px;">
+      {{ 'templates.404.subtext' | t }}
+    </p>
+
+    <div style="display: flex; justify-content: center; gap: 14px;">
+      <a href="{{ routes.root_url }}" class="btn btn-primary">
+        <span>RETURN TO HOME</span>
+      </a>
+      <a href="/collections/all" class="btn btn-secondary">
+        <span>EXPLORE COLLECTIONS</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": []
+}
+{% endschema %}

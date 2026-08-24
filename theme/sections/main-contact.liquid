@@ -1,0 +1,105 @@
+<section class="contact-page-section" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container" style="max-width: 960px;">
+    {% render 'breadcrumbs' %}
+
+    <div style="text-align: center; max-width: 600px; margin: 16px auto 48px;">
+      <span class="badge badge-editorial" style="margin-bottom: 8px;">GET IN TOUCH</span>
+      <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 2.8rem);">
+        Connect with Our Studio
+      </h1>
+      <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-top: 4px;">
+        Have a question about an order, custom commissions, or yarn materials? We'd love to hear from you.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      
+      <!-- Studio Info Left (Col 5) -->
+      <div class="lg:col-span-5" style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 28px; box-shadow: var(--shadow-subtle); display: flex; flex-direction: column; gap: 20px;">
+          
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-brown); margin-bottom: 4px;">Studio Location</div>
+            <div style="font-size: 14px; color: var(--color-text); font-weight: 600;">Maison Crochet Atelier</div>
+            <div style="font-size: 13px; color: rgba(51,44,40,0.8); margin-top: 2px;">C-Scheme, Ashok Nagar, Jaipur, Rajasthan 302001, India</div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-brown); margin-bottom: 4px;">Email Inquiries</div>
+            <div style="font-size: 14px; color: var(--color-text); font-weight: 600;">hello@maisoncrochet.in</div>
+            <div style="font-size: 12px; color: rgba(51,44,40,0.6);">Response within 24 business hours</div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-brown); margin-bottom: 4px;">Customer Care</div>
+            <div style="font-size: 14px; color: var(--color-text); font-weight: 600;">+91 98765 43210</div>
+            <div style="font-size: 12px; color: rgba(51,44,40,0.6);">Monday – Saturday, 10:00 AM – 6:00 PM IST</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Contact Form Right (Col 7) -->
+      <div class="lg:col-span-7">
+        <div style="background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 32px; box-shadow: var(--shadow-subtle);">
+          {% form 'contact' %}
+            {%- if form.posted_successfully? -%}
+              <div style="padding: 16px; background: rgba(170,181,160,0.2); border: 1px solid var(--color-sage); border-radius: var(--radius-md); font-size: 14px; color: var(--color-text); margin-bottom: 20px; font-weight: 600;">
+                ✓ Thank you! Your message has been sent to our Jaipur studio. We will reply shortly.
+              </div>
+            {%- endif -%}
+
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="ContactFormName" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Your Name *</label>
+                  <input type="text" id="ContactFormName" name="contact[name]" required class="form-input">
+                </div>
+
+                <div>
+                  <label for="ContactFormEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Your Email *</label>
+                  <input type="email" id="ContactFormEmail" name="contact[email]" required class="form-input">
+                </div>
+              </div>
+
+              <div>
+                <label for="ContactFormPhone" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Phone Number (Optional)</label>
+                <input type="tel" id="ContactFormPhone" name="contact[phone]" class="form-input">
+              </div>
+
+              <div>
+                <label for="ContactFormSubject" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Subject / Topic</label>
+                <select id="ContactFormSubject" name="contact[subject]" class="form-input">
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Order Status">Order Status & Tracking</option>
+                  <option value="Custom Order Inquiry">Custom Bespoke Order</option>
+                  <option value="Yarn & Care Guide">Yarn & Care Guide Question</option>
+                  <option value="Wholesale / Press">Wholesale / Press Collaboration</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="ContactFormMessage" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Your Message *</label>
+                <textarea id="ContactFormMessage" name="contact[body]" rows="5" required class="form-input" placeholder="How can our artisan studio help you?"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 12px; justify-content: center; width: 100%;">
+                <span>SEND MESSAGE TO STUDIO</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "settings": []
+}
+{% endschema %}

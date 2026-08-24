@@ -1,0 +1,128 @@
+{% comment %}
+  Renders a product card
+  Accepts:
+  - product_card_product: {Object} Product Liquid object
+  - show_vendor: {Boolean} Show vendor or collection
+  - show_rating: {Boolean} Show reviews rating
+{% endcomment %}
+
+{%- liquid
+  assign current_variant = product_card_product.selected_or_first_available_variant
+  assign on_sale = false
+  if product_card_product.compare_at_price > product_card_product.price
+    assign on_sale = true
+    assign save_pct = product_card_product.compare_at_price | minus: product_card_product.price | times: 100 | divided_by: product_card_product.compare_at_price | round
+  endif
+-%}
+
+<div class="product-card" id="product-card-{{ product_card_product.id }}">
+  <div class="product-card__image-wrap">
+    <a href="{{ product_card_product.url }}" class="product-card__link">
+      {%- if product_card_product.featured_image != blank -%}
+        <img
+          src="{{ product_card_product.featured_image | image_url: width: 600 }}"
+          alt="{{ product_card_product.featured_image.alt | default: product_card_product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="600"
+          class="product-card__image"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__image placeholder-svg' }}
+      {%- endif -%}
+    </a>
+
+    <!-- Badges -->
+    <div class="product-card__badges">
+      {%- if product_card_product.tags contains 'bestseller' or product_card_product.tags contains 'best-seller' -%}
+        <span class="badge badge-bestseller">BEST SELLER</span>
+      {%- endif -%}
+      {%- if product_card_product.tags contains 'new' or product_card_product.tags contains 'new-arrival' -%}
+        <span class="badge badge-new">NEW DROP</span>
+      {%- endif -%}
+      {%- if on_sale -%}
+        <span class="badge badge-sale">{{ 'products.product.save_percent' | t: percent: save_pct }}</span>
+      {%- endif -%}
+    </div>
+
+    <!-- Wishlist Button -->
+    <button
+      type="button"
+      class="product-card__wishlist"
+      data-wishlist-handle="{{ product_card_product.handle }}"
+      data-wishlist-title="{{ product_card_product.title | escape }}"
+      data-wishlist-image="{{ product_card_product.featured_image | image_url: width: 400 }}"
+      data-wishlist-price="{{ product_card_product.price | money }}"
+      aria-label="Add to wishlist"
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+
+    <!-- Quick Action Overlay for Desktop -->
+    <div class="product-card__actions-overlay">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-quick-view-handle="{{ product_card_product.handle }}"
+        style="flex: 1; padding: 8px 12px; font-size: 11px; background: rgba(255,255,255,0.95);"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #8C6F5A;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>{{ 'products.product.quick_view' | t }}</span>
+      </button>
+
+      {%- if product_card_product.available -%}
+        <form method="post" action="{{ routes.cart_add_url }}">
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="padding: 8px 12px; font-size: 11px;"
+            title="Quick Add to Bag"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #D9A7A0;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span>{{ 'products.product.quick_add' | t }}</span>
+          </button>
+        </form>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="product-card__content">
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+        <span class="product-card__vendor">{{ product_card_product.type | default: product_card_product.vendor }}</span>
+        
+        <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: rgba(51,44,40,0.8);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#D9A7A0" stroke="#D9A7A0" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>4.9</span>
+        </div>
+      </div>
+
+      <a href="{{ product_card_product.url }}" class="product-card__title">
+        {{ product_card_product.title | escape }}
+      </a>
+
+      <!-- Color Swatches preview if options exist -->
+      {%- for option in product_card_product.options_with_values -%}
+        {%- assign opt_name_down = option.name | downcase -%}
+        {%- if opt_name_down contains 'color' or opt_name_down contains 'colour' -%}
+          <div style="display: flex; gap: 6px; margin: 8px 0;">
+            {%- for val in option.values limit: 5 -%}
+              <span
+                style="width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--color-beige); background-color: var(--color-brown); display: inline-block;"
+                title="{{ val }}"
+              ></span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="product-card__prices">
+      {% render 'price', product: product_card_product %}
+    </div>
+  </div>
+</div>

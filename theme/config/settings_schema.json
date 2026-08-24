@@ -1,0 +1,248 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Maison Crochet",
+    "theme_version": "1.0.0",
+    "theme_author": "Maison Crochet Artisanal Studio",
+    "theme_documentation_url": "https://maisoncrochet.in",
+    "theme_support_url": "https://maisoncrochet.in/contact"
+  },
+  {
+    "name": "Colors & Palette",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background Color",
+        "default": "#F8F4EE"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text Color",
+        "default": "#332C28"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Accent (Terracotta Brown)",
+        "default": "#8C6F5A"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Accent (Soft Pink)",
+        "default": "#D9A7A0"
+      },
+      {
+        "type": "color",
+        "id": "color_sage",
+        "label": "Sage Green",
+        "default": "#AAB5A0"
+      },
+      {
+        "type": "color",
+        "id": "color_beige",
+        "label": "Beige / Border Tint",
+        "default": "#E7DED2"
+      },
+      {
+        "type": "color",
+        "id": "color_white",
+        "label": "Card / Container White",
+        "default": "#FFFFFF"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading Font",
+        "default": "playfair_display_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "body_font",
+        "label": "Body Font",
+        "default": "plus_jakarta_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "base_font_size",
+        "min": 14,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "label": "Base Font Size",
+        "default": 16
+      }
+    ]
+  },
+  {
+    "name": "Header & Announcement",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show Announcement Bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement Text",
+        "default": "Free shipping on orders above ₹999"
+      },
+      {
+        "type": "text",
+        "id": "announcement_subtext",
+        "label": "Announcement Subtext",
+        "default": "Slow-crafted in Jaipur, India"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Custom Brand Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 100,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo Max Width",
+        "default": 180
+      },
+      {
+        "type": "link_list",
+        "id": "main_menu",
+        "label": "Primary Navigation Menu",
+        "default": "main-menu"
+      }
+    ]
+  },
+  {
+    "name": "Shipping & Thresholds",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free Shipping Threshold (in store currency value)",
+        "default": 999
+      },
+      {
+        "type": "text",
+        "id": "shipping_lead_time",
+        "label": "Standard Delivery Timeframe",
+        "default": "3–5 Business Days"
+      }
+    ]
+  },
+  {
+    "name": "Cart & Drawer",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart Type",
+        "options": [
+          { "value": "drawer", "label": "Ajax Slide-in Drawer" },
+          { "value": "page", "label": "Cart Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_bar",
+        "label": "Show Free Shipping Progress Bar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_notes",
+        "label": "Enable Cart Order Notes",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Product Cards & Badges",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show Vendor/Category",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rating",
+        "label": "Show Star Rating",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_color_swatches",
+        "label": "Show Color Swatches on Cards",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_view",
+        "label": "Enable Quick View Modal",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_wishlist",
+        "label": "Enable Wishlist Feature",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social & Studio Contact",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram Handle / URL",
+        "default": "https://instagram.com"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook Page URL",
+        "default": "https://facebook.com"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest Profile URL",
+        "default": "https://pinterest.com"
+      },
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "Studio Phone Number",
+        "default": "+91 98765 43210"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Studio Email",
+        "default": "hello@maisoncrochet.in"
+      },
+      {
+        "type": "text",
+        "id": "contact_address",
+        "label": "Studio Physical Address",
+        "default": "Artisan Studio, C-Scheme, Jaipur, Rajasthan 302001"
+      }
+    ]
+  }
+]

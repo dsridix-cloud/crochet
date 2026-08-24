@@ -1,0 +1,113 @@
+<section class="custom-orders-page" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container" style="max-width: 900px;">
+    {% render 'breadcrumbs' %}
+
+    <div style="text-align: center; max-width: 680px; margin: 16px auto 48px;">
+      <span class="badge badge-editorial" style="margin-bottom: 10px;">BESPOKE ARTISAN COMMISSIONS</span>
+      <h1 class="heading-serif" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); line-height: 1.15;">
+        Design Your Dream <span class="font-editorial" style="font-style: italic; color: #8C6F5A;">Crochet Piece</span>
+      </h1>
+      <p style="font-size: 15px; color: rgba(51,44,40,0.8); line-height: 1.6; margin-top: 10px;">
+        Whether you desire a personalized wedding shrug, an heirloom baby blanket with initials, or a custom colorway tote, our master knitters will bring your vision to life.
+      </p>
+    </div>
+
+    <!-- 4 Step Process Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4" style="margin-bottom: 48px;">
+      <div style="background: #FFF; border-radius: var(--radius-md); border: 1px solid var(--color-beige); padding: 20px; text-align: center;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg); font-weight: 700; color: var(--color-brown); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 13px;">1</div>
+        <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">Submit Vision</div>
+        <div style="font-size: 11px; color: rgba(51,44,40,0.7);">Fill out the commission details below with your specs.</div>
+      </div>
+
+      <div style="background: #FFF; border-radius: var(--radius-md); border: 1px solid var(--color-beige); padding: 20px; text-align: center;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg); font-weight: 700; color: var(--color-brown); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 13px;">2</div>
+        <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">Artisan Consultation</div>
+        <div style="font-size: 11px; color: rgba(51,44,40,0.7);">We share yarn swatches, measurements, and a fixed quote.</div>
+      </div>
+
+      <div style="background: #FFF; border-radius: var(--radius-md); border: 1px solid var(--color-beige); padding: 20px; text-align: center;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg); font-weight: 700; color: var(--color-brown); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 13px;">3</div>
+        <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">Handmade Crafting</div>
+        <div style="font-size: 11px; color: rgba(51,44,40,0.7);">Our Jaipur knitter creates your piece loop by loop (7-14 days).</div>
+      </div>
+
+      <div style="background: #FFF; border-radius: var(--radius-md); border: 1px solid var(--color-beige); padding: 20px; text-align: center;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg); font-weight: 700; color: var(--color-brown); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 13px;">4</div>
+        <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">Studio Delivery</div>
+        <div style="font-size: 11px; color: rgba(51,44,40,0.7);">Carefully packaged with personal artisan signature card.</div>
+      </div>
+    </div>
+
+    <!-- Custom Order Form -->
+    <div style="background: #FFF; border-radius: var(--radius-xl); border: 1px solid var(--color-beige); padding: 36px; box-shadow: var(--shadow-subtle);">
+      <h2 class="heading-serif" style="font-size: 22px; margin-bottom: 20px; text-align: center;">Commission Request Form</h2>
+
+      {% form 'contact' %}
+        <input type="hidden" name="contact[tags]" value="custom-order-request">
+
+        {%- if form.posted_successfully? -%}
+          <div style="padding: 16px; background: rgba(170,181,160,0.2); border: 1px solid var(--color-sage); border-radius: var(--radius-md); font-size: 14px; color: var(--color-text); margin-bottom: 20px; font-weight: 600; text-align: center;">
+            ✓ Thank you! Your custom commission request has been received. Our master artisan will contact you via WhatsApp / Email within 24 hours.
+          </div>
+        {%- endif -%}
+
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="CustomName" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Your Name *</label>
+              <input type="text" id="CustomName" name="contact[name]" required class="form-input">
+            </div>
+
+            <div>
+              <label for="CustomEmail" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Your Email *</label>
+              <input type="email" id="CustomEmail" name="contact[email]" required class="form-input">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="CustomPhone" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Phone / WhatsApp *</label>
+              <input type="tel" id="CustomPhone" name="contact[phone]" required class="form-input" placeholder="+91 98765 43210">
+            </div>
+
+            <div>
+              <label for="CustomCategory" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Category of Interest *</label>
+              <select id="CustomCategory" name="contact[category]" class="form-input">
+                <option value="Crochet Top / Garment">Crochet Top / Garment / Shrug</option>
+                <option value="Crochet Bag / Tote">Crochet Bag / Tote / Clutch</option>
+                <option value="Heirloom Toy / Amigurumi">Heirloom Toy / Amigurumi</option>
+                <option value="Baby Blanket / Set">Baby Blanket / Keepsake Set</option>
+                <option value="Home Decor / Coasters / Rug">Home Decor / Coasters / Rug</option>
+                <option value="Other Bespoke Piece">Other Unique Concept</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="CustomPalette" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Preferred Color Palette & Yarn</label>
+            <input type="text" id="CustomPalette" name="contact[color_palette]" class="form-input" placeholder="e.g. Sage Green, Terracotta & Cream 100% Organic Cotton">
+          </div>
+
+          <div>
+            <label for="CustomDetails" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Design Description, Sizing & Reference Links *</label>
+            <textarea id="CustomDetails" name="contact[body]" rows="5" required class="form-input" placeholder="Describe the design, sizing details (bust, height, or tote dimensions), deadline or event date, and any specific motifs you love."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="padding: 16px; font-size: 12px; justify-content: center; width: 100%;">
+            <span>SUBMIT BESPOKE COMMISSION REQUEST</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      {% endform %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Order Page",
+  "settings": []
+}
+{% endschema %}

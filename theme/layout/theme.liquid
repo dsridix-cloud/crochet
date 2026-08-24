@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary | default: '#8C6F5A' }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'social-meta-tags' %}
+
+    <!-- Google Fonts Matching Maison Crochet Aesthetic & Hindi Support -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Theme Stylesheet -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    <!-- Shopify Required Header Hook -->
+    {{ content_for_header }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.ShopifyTheme = {
+        routes: {
+          root: '{{ routes.root_url }}',
+          cart_add_url: '{{ routes.cart_add_url }}',
+          cart_change_url: '{{ routes.cart_change_url }}',
+          cart_update_url: '{{ routes.cart_update_url }}',
+          cart_url: '{{ routes.cart_url }}',
+          predictive_search_url: '{{ routes.predictive_search_url }}',
+          search_url: '{{ routes.search_url }}'
+        },
+        money_format: {{ shop.money_format | json }},
+        free_shipping_threshold: {{ settings.free_shipping_threshold | default: 999 | times: 100 }},
+        currency: '{{ cart.currency.iso_code }}'
+      };
+    </script>
+  </head>
+
+  <body class="template-{{ template.name | handle }} bg-cream text-ink antialiased">
+    <a class="skip-to-content-link" href="#MainContent">
+      Skip to content
+    </a>
+
+    <!-- Header Section Group -->
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <!-- Main Content Area -->
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Footer Section Group -->
+    {% section 'footer' %}
+
+    <!-- Global Overlays & Modals -->
+    {% render 'cart-drawer' %}
+    {% render 'search-modal' %}
+    {% render 'quick-view-modal' %}
+    {% render 'toast-notification' %}
+
+    <!-- Theme Core Scripts -->
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>

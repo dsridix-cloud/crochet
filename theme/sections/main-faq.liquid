@@ -1,0 +1,84 @@
+<section class="faq-page-section" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container" style="max-width: 820px;">
+    {% render 'breadcrumbs' %}
+
+    <div style="text-align: center; max-width: 600px; margin: 16px auto 48px;">
+      <span class="badge badge-editorial" style="margin-bottom: 8px;">HELP & ANSWERS</span>
+      <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 2.8rem);">
+        Frequently Asked Questions
+      </h1>
+      <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-top: 4px;">
+        Everything you need to know about our slow-crafted handmade products, orders, and studio policies.
+      </p>
+    </div>
+
+    <!-- Grouped FAQ Categories -->
+    <div style="display: flex; flex-direction: column; gap: 32px;">
+      
+      <!-- Group 1: Products & Crafting -->
+      <div>
+        <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-brown); margin-bottom: 12px;">Craftsmanship & Materials</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-md); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: var(--color-text); text-align: left;">
+              <span>Are all products 100% hand crocheted?</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 20px 16px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              Yes! Unlike knitting which can be automated on industrial knitting looms, crochet stitches can ONLY be created by human hands using a crochet hook. Every single item is handcrafted stitch by stitch in Jaipur.
+            </div>
+          </div>
+
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-md); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: var(--color-text); text-align: left;">
+              <span>What types of yarns do you use?</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 20px 16px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              We prioritize 100% pure combed organic cotton, ultra-soft bamboo blends, and milk cotton fibers that are soft, breathable, hypoallergenic, and gentle on sensitive skin.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Group 2: Shipping & Delivery -->
+      <div>
+        <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-brown); margin-bottom: 12px;">Shipping & Delivery</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-md); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: var(--color-text); text-align: left;">
+              <span>How long will it take to receive my order?</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 20px 16px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              Ready-to-ship items are dispatched within 24–48 hours and arrive in 3–5 business days across India. Made-to-order bespoke commissions take 7–14 crafting days before dispatch.
+            </div>
+          </div>
+
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-md); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: var(--color-text); text-align: left;">
+              <span>Do you offer free shipping?</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 20px 16px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              Yes! All orders over ₹999 qualify for complimentary express shipping with tracking.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": []
+}
+{% endschema %}

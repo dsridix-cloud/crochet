@@ -1,0 +1,37 @@
+{% comment %}
+  Renders pagination
+  Accepts:
+  - paginate: {Object} Paginate Liquid object
+{% endcomment %}
+
+{%- if paginate.parts.size > 0 -%}
+  <nav class="pagination" role="navigation" aria-label="Pagination" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 48px;">
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 11px;">
+        &larr; Previous
+      </a>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a href="{{ part.url }}" class="btn btn-secondary" style="padding: 8px 14px; font-size: 11px;">
+          {{ part.title }}
+        </a>
+      {%- else -%}
+        {%- if part.title == paginate.current_page -%}
+          <span class="btn btn-primary" style="padding: 8px 14px; font-size: 11px;">
+            {{ part.title }}
+          </span>
+        {%- else -%}
+          <span style="padding: 8px 12px; font-size: 12px; color: rgba(51,44,40,0.5);">{{ part.title }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 11px;">
+        Next &rarr;
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

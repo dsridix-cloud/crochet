@@ -1,0 +1,53 @@
+<section class="collection-banner-section" style="padding: 48px 0 24px; background: rgba(231,222,210,0.4); border-bottom: 1px solid var(--color-beige);">
+  <div class="container">
+    {% render 'breadcrumbs' %}
+
+    <div style="max-width: 700px; margin-top: 12px;">
+      <span style="font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: var(--color-brown);">
+        Handmade Collection
+      </span>
+      <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: 4px; margin-bottom: 12px;">
+        {{ collection.title | default: 'All Handmade Pieces' }}
+      </h1>
+      {%- if collection.description != blank -%}
+        <div style="font-size: 14px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+          {{ collection.description }}
+        </div>
+      {%- else -%}
+        <p style="font-size: 14px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+          Explore our complete collection of handmade crochet garments, artisan bags, playful heirloom toys, and conscious home accents.
+        </p>
+      {%- endif -%}
+    </div>
+
+    <!-- Quick Collection Links Pills -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(51,44,40,0.1);">
+      <a href="/collections/all" class="badge badge-editorial {% if collection.handle == 'all' or collection.handle == blank %}bg-brown text-white{% endif %}" style="padding: 6px 14px; font-size: 12px;">
+        All Pieces
+      </a>
+      <a href="/collections/tops" class="badge badge-editorial {% if collection.handle == 'tops' %}bg-brown text-white{% endif %}" style="padding: 6px 14px; font-size: 12px;">
+        Tops & Vests
+      </a>
+      <a href="/collections/bags" class="badge badge-editorial {% if collection.handle == 'bags' %}bg-brown text-white{% endif %}" style="padding: 6px 14px; font-size: 12px;">
+        Tote Bags & Purses
+      </a>
+      <a href="/collections/toys" class="badge badge-editorial {% if collection.handle == 'toys' %}bg-brown text-white{% endif %}" style="padding: 6px 14px; font-size: 12px;">
+        Amigurumi Toys
+      </a>
+      <a href="/collections/home-decor" class="badge badge-editorial {% if collection.handle == 'home-decor' %}bg-brown text-white{% endif %}" style="padding: 6px 14px; font-size: 12px;">
+        Home Decor
+      </a>
+      <a href="/collections/gifts" class="badge badge-editorial {% if collection.handle == 'gifts' %}bg-brown text-white{% endif %}" style="padding: 6px 14px; font-size: 12px;">
+        Handmade Gifts
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Banner",
+  "settings": []
+}
+{% endschema %}

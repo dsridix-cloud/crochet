@@ -1,0 +1,35 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {}
+    },
+    "product_grid": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 12
+      }
+    },
+    "custom_order_banner": {
+      "type": "custom-order-banner",
+      "settings": {
+        "badge": "BESPOKE ARTISAN SERVICE",
+        "heading": "Want something customized?",
+        "text": "Choose your preferred yarn colors, dimensions, and personalized details directly with our studio."
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "badge": "STUDIO DISPATCHES",
+        "heading": "Join the Maison Circle"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product_grid",
+    "custom_order_banner",
+    "newsletter"
+  ]
+}

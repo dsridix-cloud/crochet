@@ -1,0 +1,162 @@
+<footer id="main-footer" style="background-color: rgba(231,222,210,0.6); border-top: 1px solid var(--color-beige); color: var(--color-text); padding-top: 64px; padding-bottom: 48px; margin-top: 80px;">
+  <div class="container">
+    
+    <!-- 4 Value Badges Banner -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6" style="padding-bottom: 48px; border-bottom: 1px solid rgba(51,44,40,0.1); text-align: center;">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #F8F4EE; display: flex; align-items: center; justify-content: center; color: #8C6F5A; margin-bottom: 12px; box-shadow: var(--shadow-subtle);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        </div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text);">{{ 'footer.handcrafted_title' | t }}</h4>
+        <p style="font-size: 11px; color: rgba(51,44,40,0.7); margin-top: 4px; max-width: 180px;">{{ 'footer.handcrafted_desc' | t }}</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #F8F4EE; display: flex; align-items: center; justify-content: center; color: #8C6F5A; margin-bottom: 12px; box-shadow: var(--shadow-subtle);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text);">{{ 'footer.shipping_title' | t }}</h4>
+        <p style="font-size: 11px; color: rgba(51,44,40,0.7); margin-top: 4px; max-width: 180px;">{{ 'footer.shipping_desc' | t }}</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #F8F4EE; display: flex; align-items: center; justify-content: center; color: #8C6F5A; margin-bottom: 12px; box-shadow: var(--shadow-subtle);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text);">{{ 'footer.empowerment_title' | t }}</h4>
+        <p style="font-size: 11px; color: rgba(51,44,40,0.7); margin-top: 4px; max-width: 180px;">{{ 'footer.empowerment_desc' | t }}</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: #F8F4EE; display: flex; align-items: center; justify-content: center; color: #8C6F5A; margin-bottom: 12px; box-shadow: var(--shadow-subtle);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text);">{{ 'footer.materials_title' | t }}</h4>
+        <p style="font-size: 11px; color: rgba(51,44,40,0.7); margin-top: 4px; max-width: 180px;">{{ 'footer.materials_desc' | t }}</p>
+      </div>
+    </div>
+
+    <!-- Main Footer Links Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8" style="padding-top: 48px; padding-bottom: 48px;">
+      
+      <!-- Brand Column -->
+      <div class="lg:col-span-2" style="display: flex; flex-direction: column; gap: 16px;">
+        <a href="{{ routes.root_url }}" style="text-decoration: none;">
+          <span style="font-family: var(--font-heading); font-size: 24px; font-weight: 700; letter-spacing: 0.15em; color: var(--color-text); text-transform: uppercase; display: block;">
+            {{ shop.name | default: 'MAISON CROCHET' }}
+          </span>
+          <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.25em; color: #8C6F5A; font-weight: 600; display: block; margin-top: 1px;">
+            {{ 'header.studio_tag' | t }}
+          </span>
+        </a>
+
+        <p style="font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6; max-width: 360px;">
+          We are a modern slow-fashion boutique celebrating the enduring beauty of traditional crochet. Every loop tells a story of patience, passion, and personal craftsmanship.
+        </p>
+
+        <div style="font-size: 12px; color: rgba(51,44,40,0.75); display: flex; flex-direction: column; gap: 6px;">
+          <div>Artisan Studio, C-Scheme, Jaipur, Rajasthan 302001</div>
+          <div>hello@maisoncrochet.in</div>
+          <div>+91 98765 43210 (Mon–Sat, 10am–6pm IST)</div>
+        </div>
+      </div>
+
+      <!-- Quick Links 1 -->
+      <div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text); margin-bottom: 16px;">Handmade Drops</h4>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: rgba(51,44,40,0.8);">
+          {%- if linklists.footer.links.size > 0 -%}
+            {%- for link in linklists.footer.links -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/collections/tops">Crochet Tops & Vests</a>
+            <a href="/collections/bags">Textured Bags & Totes</a>
+            <a href="/collections/toys">Amigurumi Heirloom Toys</a>
+            <a href="/collections/home-decor">Home Accents & Coasters</a>
+            <a href="/collections/gifts">Bespoke Gift Sets</a>
+            <a href="/pages/custom-orders" style="color: #8C6F5A; font-weight: 600;">Custom Order Studio</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Quick Links 2 -->
+      <div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text); margin-bottom: 16px;">Our Studio</h4>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: rgba(51,44,40,0.8);">
+          <a href="/pages/about">Our Story & Artisans</a>
+          <a href="/pages/care-guide">Yarn & Wash Care Guide</a>
+          <a href="/pages/shipping-info">Shipping & Delivery</a>
+          <a href="/pages/returns-refunds">Returns & Exchanges</a>
+          <a href="/pages/faq">Frequently Asked Questions</a>
+          <a href="/pages/contact">Contact Studio</a>
+        </div>
+      </div>
+
+      <!-- Newsletter Column -->
+      <div>
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text); margin-bottom: 16px;">{{ 'footer.newsletter_title' | t }}</h4>
+        <p style="font-size: 12px; color: rgba(51,44,40,0.75); margin-bottom: 12px;">{{ 'footer.newsletter_subtext' | t }}</p>
+        {% form 'customer', class: 'footer-newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <input
+              type="email"
+              name="contact[email]"
+              placeholder="{{ 'footer.newsletter_placeholder' | t }}"
+              required
+              class="form-input"
+              style="padding: 10px 14px; font-size: 12px;"
+            >
+            <button type="submit" class="btn btn-primary" style="padding: 10px; font-size: 11px;">
+              {{ 'footer.subscribe' | t }}
+            </button>
+          </div>
+        {% endform %}
+      </div>
+
+    </div>
+
+    <!-- Copyright Sub-Footer -->
+    <div style="padding-top: 24px; border-top: 1px solid rgba(51,44,40,0.1); display: flex; flex-direction: column; gap: 16px; align-items: center; justify-content: space-between; font-size: 11px; color: rgba(51,44,40,0.6);" class="sm:flex-row">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.copyright' | t }}</div>
+        
+        <!-- Language Selector -->
+        {%- if localization.available_languages.size > 1 -%}
+          <div class="localization-selector">
+            {% form 'localization' %}
+              <div style="position: relative; display: inline-flex; align-items: center; background: #FFF; border: 1px solid var(--color-beige); border-radius: var(--radius-sm); padding: 4px 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <select name="locale_code" onchange="this.form.submit()" style="background: transparent; border: none; font-size: 11px; color: var(--color-text); outline: none; cursor: pointer; text-transform: uppercase; font-weight: 600;">
+                  {% for locale in localization.available_languages %}
+                    <option
+                      value="{{ locale.iso_code }}"
+                      {% if locale.iso_code == localization.language.iso_code %}selected{% endif %}
+                    >
+                      {{ locale.endonym_name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endform %}
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div style="display: flex; gap: 16px;">
+        <a href="/policies/privacy-policy">Privacy Policy</a>
+        <a href="/policies/terms-of-service">Terms & Conditions</a>
+        <a href="/policies/refund-policy">Refund Policy</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

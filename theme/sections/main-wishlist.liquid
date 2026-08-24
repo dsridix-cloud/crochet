@@ -1,0 +1,37 @@
+<section class="wishlist-page-section" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container">
+    {% render 'breadcrumbs' %}
+
+    <div style="margin-top: 16px; margin-bottom: 32px;">
+      <span class="badge badge-editorial" style="margin-bottom: 8px;">SAVED PIECES</span>
+      <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 2.8rem);">
+        Your Curated Wishlist
+      </h1>
+      <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-top: 4px;">
+        Handmade pieces you've saved for future consideration.
+      </p>
+    </div>
+
+    <!-- Wishlist Dynamic Container -->
+    <div id="wishlist-grid-container" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      <!-- Populated via theme.js from localStorage -->
+    </div>
+
+    <div id="wishlist-empty-state" style="display: none; text-align: center; padding: 80px 20px; background: #FFF; border-radius: var(--radius-xl); border: 1px solid var(--color-beige); max-width: 540px; margin: 40px auto 0;">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--color-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #8C6F5A;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <h3 class="heading-serif" style="font-size: 20px; margin-bottom: 8px;">No Saved Treasures Yet</h3>
+      <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-bottom: 20px;">Click the heart icon on any piece to save it here.</p>
+      <a href="/collections/all" class="btn btn-primary">EXPLORE COLLECTIONS</a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "settings": []
+}
+{% endschema %}

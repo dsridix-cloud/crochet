@@ -1,0 +1,62 @@
+<section class="about-page-section" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container">
+    {% render 'breadcrumbs' %}
+
+    <div style="max-width: 760px; margin: 16px auto 48px; text-align: center;">
+      <span class="badge badge-editorial" style="margin-bottom: 12px;">OUR HERITAGE & VISION</span>
+      <h1 class="heading-serif" style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.15; margin-bottom: 16px;">
+        Preserving the Poetry of <span class="font-editorial" style="font-style: italic; color: #8C6F5A;">Slow Stitches</span>
+      </h1>
+      <p style="font-size: 16px; color: rgba(51,44,40,0.8); line-height: 1.6; font-weight: 300;">
+        Maison Crochet was founded in Jaipur with a single devotion: honoring the quiet rhythm of handmade craftsmanship in an impatient, mass-produced world.
+      </p>
+    </div>
+
+    <!-- 2 Column Editorial Story -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12" style="align-items: center; margin-bottom: 64px;">
+      <div style="aspect-ratio: 4/3; border-radius: var(--radius-xl); overflow: hidden; border: 4px solid #FFF; box-shadow: var(--shadow-hover);">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=85" alt="Jaipur artisan collective" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <span class="badge badge-editorial" style="align-self: flex-start;">THE STUDIO</span>
+        <h2 class="heading-serif" style="font-size: 26px;">The Jaipur Collective</h2>
+        <p style="font-size: 14px; color: rgba(51,44,40,0.85); line-height: 1.6;">
+          In the historic pink city of Jaipur, our studio brings together multi-generational women knitters and master artisans. Crochet cannot be replicated by any industrial machine; every stitch requires human touch, intuition, and patience.
+        </p>
+        <p style="font-size: 14px; color: rgba(51,44,40,0.85); line-height: 1.6;">
+          By providing dignified compensation, flexible home-studio hours, and supportive community circles, Maison Crochet enables artisans to cultivate financial independence while celebrating their traditional mastery.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3 Pillars Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" style="margin-bottom: 64px;">
+      <div style="background: #FFF; padding: 32px 24px; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 28px; font-weight: 700; color: var(--color-brown); font-family: var(--font-heading); margin-bottom: 8px;">01</div>
+        <h3 style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; margin-bottom: 8px;">Conscious Slow Fashion</h3>
+        <p style="font-size: 13px; color: rgba(51,44,40,0.75); line-height: 1.5;">Small-batch, made-to-order releases that eliminate landfill waste and honor the hours invested in each creation.</p>
+      </div>
+
+      <div style="background: #FFF; padding: 32px 24px; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 28px; font-weight: 700; color: var(--color-brown); font-family: var(--font-heading); margin-bottom: 8px;">02</div>
+        <h3 style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; margin-bottom: 8px;">Pure Botanical Yarns</h3>
+        <p style="font-size: 13px; color: rgba(51,44,40,0.75); line-height: 1.5;">Strictly organic cottons, soft bamboo fibers, and natural plant-based dyes for gentle breathability and timeless durability.</p>
+      </div>
+
+      <div style="background: #FFF; padding: 32px 24px; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); box-shadow: var(--shadow-subtle);">
+        <div style="font-size: 28px; font-weight: 700; color: var(--color-brown); font-family: var(--font-heading); margin-bottom: 8px;">03</div>
+        <h3 style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; margin-bottom: 8px;">Artisan Empowerment</h3>
+        <p style="font-size: 13px; color: rgba(51,44,40,0.75); line-height: 1.5;">Direct living wages, health support, and flexible craft schedules for over 35+ female artisans across Rajasthan.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Page",
+  "settings": []
+}
+{% endschema %}

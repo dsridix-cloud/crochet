@@ -1,0 +1,33 @@
+{
+  "current": {
+    "color_bg": "#F8F4EE",
+    "color_text": "#332C28",
+    "color_primary": "#8C6F5A",
+    "color_secondary": "#D9A7A0",
+    "color_sage": "#AAB5A0",
+    "color_beige": "#E7DED2",
+    "color_white": "#FFFFFF",
+    "base_font_size": 16,
+    "show_announcement": true,
+    "announcement_text": "Free shipping on orders above ₹999",
+    "announcement_subtext": "Slow-crafted in Jaipur, India",
+    "logo_width": 180,
+    "main_menu": "main-menu",
+    "free_shipping_threshold": 999,
+    "shipping_lead_time": "3–5 Business Days",
+    "cart_type": "drawer",
+    "show_free_shipping_bar": true,
+    "show_cart_notes": true,
+    "show_vendor": true,
+    "show_rating": true,
+    "show_color_swatches": true,
+    "enable_quick_view": true,
+    "enable_wishlist": true,
+    "social_instagram": "https://instagram.com",
+    "social_facebook": "https://facebook.com",
+    "social_pinterest": "https://pinterest.com",
+    "contact_phone": "+91 98765 43210",
+    "contact_email": "hello@maisoncrochet.in",
+    "contact_address": "Artisan Studio, C-Scheme, Jaipur, Rajasthan 302001"
+  }
+}

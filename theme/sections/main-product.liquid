@@ -1,0 +1,250 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+    assign save_pct = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round
+  endif
+-%}
+
+<section class="main-product-section" style="padding: 32px 0 64px; background: var(--color-bg);">
+  <div class="container">
+    
+    <!-- Breadcrumbs -->
+    {% render 'breadcrumbs' %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14" style="margin-top: 16px;">
+      
+      <!-- Product Gallery Left (Col 7) -->
+      <div class="lg:col-span-7">
+        <div style="position: sticky; top: 100px;">
+          
+          <!-- Main Active Image -->
+          <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; background: #FFF; border: 1px solid var(--color-beige); box-shadow: var(--shadow-subtle); position: relative;">
+            <img
+              id="product-main-image"
+              src="{{ current_variant.featured_image | default: product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.title | escape }}"
+              style="width: 100%; height: 100%; object-fit: cover;"
+            >
+
+            <div style="position: absolute; top: 16px; left: 16px; display: flex; flex-direction: column; gap: 6px;">
+              {%- if product.tags contains 'bestseller' or product.tags contains 'best-seller' -%}
+                <span class="badge badge-bestseller">BEST SELLER</span>
+              {%- endif -%}
+              {%- if on_sale -%}
+                <span class="badge badge-sale">{{ 'products.product.save_percent' | t: percent: save_pct }}</span>
+              {%- endif -%}
+              <span class="badge badge-editorial" style="background: rgba(255,255,255,0.9);">100% HANDMADE</span>
+            </div>
+          </div>
+
+          <!-- Thumbnails Row -->
+          {%- if product.images.size > 1 -%}
+            <div style="display: flex; gap: 10px; margin-top: 14px; overflow-x: auto; padding-bottom: 6px;">
+              {%- for image in product.images -%}
+                <button
+                  type="button"
+                  onclick="document.getElementById('product-main-image').src='{{ image | image_url: width: 1200 }}'; document.querySelectorAll('.product-thumb-btn').forEach(b => b.style.borderColor='var(--color-beige)'); this.style.borderColor='var(--color-brown)';"
+                  class="product-thumb-btn"
+                  style="width: 72px; height: 72px; border-radius: var(--radius-md); overflow: hidden; border: 2px solid {% if forloop.first %}var(--color-brown){% else %}var(--color-beige){% endif %}; flex-shrink: 0; background: #FFF;"
+                  aria-label="View image {{ forloop.index }}"
+                >
+                  <img src="{{ image | image_url: width: 200 }}" alt="{{ product.title | escape }}" style="width: 100%; height: 100%; object-fit: cover;">
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+        </div>
+      </div>
+
+      <!-- Product Form & Details Right (Col 5) -->
+      <div class="lg:col-span-5" style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Category & Title -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: var(--color-brown);">
+              {{ product.type | default: 'Artisanal Crochet' }}
+            </span>
+            <div style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--color-text);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#D9A7A0" stroke="#D9A7A0" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>4.9 / 5 (42 artisan reviews)</span>
+            </div>
+          </div>
+
+          <h1 class="heading-serif" style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); color: var(--color-text); line-height: 1.15;">
+            {{ product.title }}
+          </h1>
+        </div>
+
+        <!-- Price block -->
+        <div style="display: flex; align-items: baseline; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); background: #FFF; border: 1px solid var(--color-beige); width: fit-content;">
+          <span style="font-size: 24px; font-weight: 700; color: var(--color-text);">
+            {{ current_variant.price | money }}
+          </span>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span style="font-size: 16px; text-decoration: line-line-through; color: rgba(51,44,40,0.4); text-decoration: line-through;">
+              {{ current_variant.compare_at_price | money }}
+            </span>
+            <span class="badge badge-sale" style="font-size: 10px;">
+              {{ 'products.product.save_percent' | t: percent: save_pct }}
+            </span>
+          {%- endif -%}
+          <span style="font-size: 11px; color: rgba(51,44,40,0.6);">Inclusive of all taxes</span>
+        </div>
+
+        <!-- Short Description -->
+        {%- if product.description != blank -%}
+          <div style="font-size: 14px; color: rgba(51,44,40,0.85); line-height: 1.6;">
+            {{ product.description | truncatewords: 40 }}
+          </div>
+        {%- endif -%}
+
+        <!-- Add to Cart Form -->
+        {% form 'product', product, id: 'main-product-form' %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" id="selected-variant-id">
+
+          <!-- Variant Options (Color / Size) -->
+          {%- unless product.has_only_default_variant -%}
+            <div style="display: flex; flex-direction: column; gap: 16px; margin: 16px 0;">
+              {%- for option in product.options_with_values -%}
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text); margin-bottom: 8px;">
+                    <span>{{ option.name }}: <span style="font-weight: 400; color: var(--color-brown);" id="option-label-{{ option.position }}">{{ option.selected_value }}</span></span>
+                  </div>
+
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    {%- for value in option.values -%}
+                      <label
+                        style="padding: 8px 16px; border-radius: var(--radius-sm); border: 1.5px solid {% if option.selected_value == value %}var(--color-brown){% else %}var(--color-beige){% endif %}; background: {% if option.selected_value == value %}#FFF{% else %}rgba(255,255,255,0.6){% endif %}; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--color-text); transition: all 0.2s;"
+                      >
+                        <input
+                          type="radio"
+                          name="option-{{ option.position }}"
+                          value="{{ value | escape }}"
+                          {% if option.selected_value == value %}checked{% endif %}
+                          style="display: none;"
+                          onchange="document.getElementById('option-label-{{ option.position }}').innerText = this.value; this.closest('.grid, div').querySelectorAll('label').forEach(l => {l.style.borderColor='var(--color-beige)'; l.style.background='rgba(255,255,255,0.6)';}); this.parentElement.style.borderColor='var(--color-brown)'; this.parentElement.style.background='#FFF';"
+                        >
+                        {{ value }}
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <!-- Quantity + CTA Buttons -->
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 18px;">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              {% render 'quantity-selector' %}
+
+              <button
+                type="submit"
+                name="add"
+                class="btn btn-primary"
+                style="flex: 1; padding: 14px 20px; font-size: 12px; justify-content: center;"
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A7A0" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span>{% if current_variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-wishlist-handle="{{ product.handle }}"
+                data-wishlist-title="{{ product.title | escape }}"
+                data-wishlist-image="{{ product.featured_image | image_url: width: 400 }}"
+                data-wishlist-price="{{ product.price | money }}"
+                style="padding: 14px; border-radius: var(--radius-md);"
+                aria-label="Add to wishlist"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+            </div>
+
+            <!-- Dynamic Checkout -->
+            {%- if section.settings.show_dynamic_checkout -%}
+              {{ form | payment_button }}
+            {%- endif -%}
+          </div>
+        {% endform %}
+
+        <!-- Artisan Guarantee Box -->
+        <div style="background: rgba(231,222,210,0.4); border: 1px solid var(--color-beige); border-radius: var(--radius-md); padding: 16px; margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C6F5A" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--color-text); letter-spacing: 0.05em;">Artisan Provenance</span>
+          </div>
+          <p style="font-size: 12px; color: rgba(51,44,40,0.8); line-height: 1.5;">
+            Slow-crafted stitch by stitch in Jaipur. Estimated handcrafting duration: <strong>14 to 18 hours</strong> of focused manual dexterity.
+          </p>
+          <div style="display: grid; grid-cols-2 gap-2; font-size: 11px; color: rgba(51,44,40,0.7); padding-top: 8px; border-top: 1px solid var(--color-beige);" class="grid grid-cols-2">
+            <div>✓ 100% Organic Yarns</div>
+            <div>✓ Free Express Delivery > ₹999</div>
+            <div>✓ 7-Day Easy Exchange</div>
+            <div>✓ Plastic-Free Wrapping</div>
+          </div>
+        </div>
+
+        <!-- Accordions -->
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+          
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-sm); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: var(--color-text);">
+              <span>{{ 'products.product.details_tab' | t }}</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 16px 14px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              {{ product.description | default: 'Meticulously crocheted using 100% natural, combed cotton. Breathable, durable, and hypoallergenic.' }}
+            </div>
+          </div>
+
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-sm); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: var(--color-text);">
+              <span>{{ 'products.product.care_tab' | t }}</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 16px 14px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              • Hand wash in cool water with gentle pH-neutral wool/cotton detergent.<br>
+              • Do not twist or wring. Roll in a clean dry towel to absorb moisture.<br>
+              • Reshape and dry flat in the shade. Never tumble dry.
+            </div>
+          </div>
+
+          <div class="accordion-item" style="border: 1px solid var(--color-beige); border-radius: var(--radius-sm); background: #FFF; overflow: hidden;">
+            <button type="button" class="accordion-header" style="width: 100%; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: var(--color-text);">
+              <span>Shipping & Returns</span>
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-content" style="display: none; padding: 0 16px 14px; font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.6;">
+              In-stock items ship within 24-48 hours. Custom made items require 7-10 crafting days. Free shipping across India on all prepaid orders over ₹999.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout button",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

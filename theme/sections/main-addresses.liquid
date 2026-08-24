@@ -1,0 +1,78 @@
+<section class="customer-addresses-section" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container" style="max-width: 800px;">
+    {% render 'breadcrumbs' %}
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; margin-bottom: 32px;">
+      <div>
+        <h1 class="heading-serif" style="font-size: 26px;">{{ 'customer.addresses.title' | t }}</h1>
+        <a href="{{ routes.account_url }}" style="font-size: 12px; color: #8C6F5A; text-decoration: underline;">&larr; Return to Account Overview</a>
+      </div>
+
+      <button type="button" onclick="document.getElementById('AddAddress').style.display='block';" class="btn btn-primary" style="font-size: 11px;">
+        {{ 'customer.addresses.add_new' | t }}
+      </button>
+    </div>
+
+    <!-- New Address Form (Hidden by default) -->
+    <div id="AddAddress" style="display: none; background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 28px; margin-bottom: 32px; box-shadow: var(--shadow-subtle);">
+      <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; margin-bottom: 16px;">Add a New Address</h2>
+      {% form 'customer_address', customer.new_address %}
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">First Name</label>
+              <input type="text" name="address[first_name]" value="{{ form.first_name }}" class="form-input">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">Last Name</label>
+              <input type="text" name="address[last_name]" value="{{ form.last_name }}" class="form-input">
+            </div>
+          </div>
+          <div>
+            <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">Address 1</label>
+            <input type="text" name="address[address1]" value="{{ form.address1 }}" class="form-input">
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">City</label>
+              <input type="text" name="address[city]" value="{{ form.city }}" class="form-input">
+            </div>
+            <div>
+              <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">Postal/Zip Code</label>
+              <input type="text" name="address[zip]" value="{{ form.zip }}" class="form-input">
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" style="font-size: 11px;">Save Address</button>
+            <button type="button" onclick="document.getElementById('AddAddress').style.display='none';" class="btn btn-secondary" style="font-size: 11px;">Cancel</button>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+
+    <!-- Saved Addresses List -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      {%- for address in customer.addresses -%}
+        <div style="background: #FFF; border-radius: var(--radius-md); border: 1px solid var(--color-beige); padding: 20px; box-shadow: var(--shadow-subtle); display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            {%- if address == customer.default_address -%}
+              <span class="badge badge-editorial" style="margin-bottom: 6px;">{{ 'customer.addresses.default' | t }}</span>
+            {%- endif -%}
+            <div style="font-weight: 700; font-size: 14px; color: var(--color-text);">{{ address.name }}</div>
+            <div style="font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.5; margin-top: 4px;">
+              {{ address | format_address }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Addresses",
+  "settings": []
+}
+{% endschema %}

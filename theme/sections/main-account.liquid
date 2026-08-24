@@ -1,0 +1,125 @@
+<section class="customer-account-section" style="padding: 48px 0 80px; background: var(--color-bg);">
+  <div class="container">
+    {% render 'breadcrumbs' %}
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 16px; margin-bottom: 36px; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <span class="badge badge-editorial" style="margin-bottom: 6px;">PATRON ACCOUNT</span>
+        <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 2.6rem);">
+          {{ 'customer.account.welcome' | t }}, {{ customer.first_name | default: 'Artisan Collector' }}
+        </h1>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="{{ routes.account_addresses_url }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 11px;">
+          View Addresses ({{ customer.addresses_count }})
+        </a>
+        <a href="{{ routes.account_logout_url }}" class="btn btn-secondary" style="padding: 8px 16px; font-size: 11px; color: #8C6F5A;">
+          {{ 'customer.account.log_out' | t }}
+        </a>
+      </div>
+    </div>
+
+    <!-- 2 Column Account Overview -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Order History Left (Col 8) -->
+      <div class="lg:col-span-8">
+        <div style="background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 24px; box-shadow: var(--shadow-subtle);">
+          <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--color-beige);">
+            {{ 'customer.account.orders' | t }}
+          </h2>
+
+          {%- paginate customer.orders by 10 -%}
+            {%- if customer.orders.size > 0 -%}
+              <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--color-beige); color: #8C6F5A; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">
+                      <th style="padding: 10px 12px;">{{ 'customer.orders.order_number' | t }}</th>
+                      <th style="padding: 10px 12px;">{{ 'customer.orders.date' | t }}</th>
+                      <th style="padding: 10px 12px;">{{ 'customer.orders.payment_status' | t }}</th>
+                      <th style="padding: 10px 12px;">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                      <th style="padding: 10px 12px; text-align: right;">{{ 'customer.orders.total' | t }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%- for order in customer.orders -%}
+                      <tr style="border-bottom: 1px solid var(--color-beige);">
+                        <td style="padding: 12px;">
+                          <a href="{{ order.customer_url }}" style="font-weight: 700; color: var(--color-text);">
+                            {{ order.name }}
+                          </a>
+                        </td>
+                        <td style="padding: 12px; color: rgba(51,44,40,0.7);">
+                          {{ order.created_at | time_tag: format: 'date' }}
+                        </td>
+                        <td style="padding: 12px;">
+                          <span class="badge badge-editorial" style="font-size: 10px;">{{ order.financial_status_label }}</span>
+                        </td>
+                        <td style="padding: 12px;">
+                          <span class="badge badge-editorial" style="font-size: 10px;">{{ order.fulfillment_status_label }}</span>
+                        </td>
+                        <td style="padding: 12px; text-align: right; font-weight: 700;">
+                          {{ order.total_price | money_with_currency }}
+                        </td>
+                      </tr>
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+              </div>
+            {%- else -%}
+              <div style="text-align: center; padding: 40px 20px;">
+                <p style="font-size: 14px; color: rgba(51,44,40,0.7); margin-bottom: 16px;">{{ 'customer.orders.no_orders' | t }}</p>
+                <a href="/collections/all" class="btn btn-primary" style="font-size: 11px;">Start Exploring</a>
+              </div>
+            {%- endif -%}
+          {%- endpaginate -%}
+        </div>
+      </div>
+
+      <!-- Account Summary Right (Col 4) -->
+      <div class="lg:col-span-4">
+        <div style="background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--color-beige); padding: 24px; box-shadow: var(--shadow-subtle); display: flex; flex-direction: column; gap: 16px;">
+          <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700; color: var(--color-text); padding-bottom: 12px; border-bottom: 1px solid var(--color-beige);">
+            {{ 'customer.account.profile' | t }}
+          </h2>
+
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8C6F5A; letter-spacing: 0.05em; margin-bottom: 2px;">Name</div>
+            <div style="font-size: 14px; font-weight: 600;">{{ customer.name }}</div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8C6F5A; letter-spacing: 0.05em; margin-bottom: 2px;">Email</div>
+            <div style="font-size: 14px;">{{ customer.email }}</div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #8C6F5A; letter-spacing: 0.05em; margin-bottom: 2px;">Default Shipping Address</div>
+            {%- if customer.default_address -%}
+              <div style="font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.5; margin-top: 4px;">
+                {{ customer.default_address | format_address }}
+              </div>
+            {%- else -%}
+              <div style="font-size: 13px; color: rgba(51,44,40,0.6);">No address saved yet.</div>
+            {%- endif -%}
+          </div>
+
+          <a href="{{ routes.account_addresses_url }}" class="btn btn-secondary" style="margin-top: 8px; font-size: 11px; text-align: center; justify-content: center;">
+            {{ 'customer.account.addresses' | t }}
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Account",
+  "settings": []
+}
+{% endschema %}

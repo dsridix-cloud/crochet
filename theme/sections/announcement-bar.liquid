@@ -1,0 +1,51 @@
+{%- if section.settings.show_announcement -%}
+  <div
+    id="announcement-bar-section"
+    style="background-color: {{ section.settings.bg_color | default: '#8C6F5A' }}; color: {{ section.settings.text_color | default: '#FFFFFF' }}; padding: 7px 16px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;"
+  >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E7DED2" stroke-width="2" style="flex-shrink: 0;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+    <span>{{ section.settings.announcement_text | default: 'Free shipping on orders above ₹999' }}</span>
+    {%- if section.settings.announcement_subtext != blank -%}
+      <span style="opacity: 0.5;">•</span>
+      <span style="color: #E7DED2;">{{ section.settings.announcement_subtext }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Free shipping on orders above ₹999"
+    },
+    {
+      "type": "text",
+      "id": "announcement_subtext",
+      "label": "Announcement Subtext",
+      "default": "Slow-crafted in Jaipur, India"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#8C6F5A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    }
+  ]
+}
+{% endschema %}
