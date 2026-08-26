@@ -19,7 +19,7 @@
         <input
           type="email"
           name="contact[email]"
-          placeholder="Your email address"
+          placeholder="{{ 'newsletter.email_placeholder' | t }}"
           required
           class="form-input"
           style="flex: 1; padding: 12px 18px; font-size: 14px; border-radius: 999px;"
@@ -31,7 +31,7 @@
 
       {%- if form.posted_successfully? -%}
         <p style="margin-top: 12px; font-size: 13px; color: var(--color-brown); font-weight: 600;">
-          Thank you for subscribing to our artisan studio!
+          {{ 'newsletter.success' | t }}
         </p>
       {%- endif -%}
     {% endform %}

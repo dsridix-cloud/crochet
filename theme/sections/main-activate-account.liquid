@@ -3,8 +3,8 @@
     
     <div style="background: #FFF; border-radius: var(--radius-xl); border: 1px solid var(--color-beige); padding: 36px 32px; box-shadow: var(--shadow-subtle);">
       <div style="text-align: center; margin-bottom: 24px;">
-        <h1 class="heading-serif" style="font-size: 24px;">Activate Account</h1>
-        <p style="font-size: 13px; color: rgba(51,44,40,0.7); margin-top: 4px;">Create a password to activate your account.</p>
+        <h1 class="heading-serif" style="font-size: 24px;">{{ 'customer.activate_account.title' | t }}</h1>
+        <p style="font-size: 13px; color: rgba(51,44,40,0.7); margin-top: 4px;">{{ 'customer.activate_account.subtext' | t }}</p>
       </div>
 
       {% form 'activate_customer_password' %}
@@ -12,21 +12,21 @@
 
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <div>
-            <label for="password" style="font-size: 12px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 6px;">Password</label>
+            <label for="password" style="font-size: 12px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 6px;">{{ 'customer.activate_account.password' | t }}</label>
             <input type="password" name="customer[password]" id="password" required class="form-input">
           </div>
 
           <div>
-            <label for="password_confirmation" style="font-size: 12px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 6px;">Confirm Password</label>
+            <label for="password_confirmation" style="font-size: 12px; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 6px;">{{ 'customer.activate_account.password_confirm' | t }}</label>
             <input type="password" name="customer[password_confirmation]" id="password_confirmation" required class="form-input">
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
             <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 12px; justify-content: center; width: 100%;">
-              <span>Activate Account</span>
+              <span>{{ 'customer.activate_account.submit' | t }}</span>
             </button>
             <button type="submit" name="decline" class="btn btn-secondary" style="padding: 12px; font-size: 12px; justify-content: center; width: 100%;">
-              <span>Decline Invitation</span>
+              <span>{{ 'customer.activate_account.cancel' | t }}</span>
             </button>
           </div>
         </div>

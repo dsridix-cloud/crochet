@@ -4,12 +4,12 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; margin-bottom: 32px;">
       <div>
-        <h1 class="heading-serif" style="font-size: 26px;">Your Addresses</h1>
+        <h1 class="heading-serif" style="font-size: 26px;">{{ 'customer.addresses.title' | t }}</h1>
         <a href="{{ routes.account_url }}" style="font-size: 12px; color: #8C6F5A; text-decoration: underline;">&larr; Return to Account Overview</a>
       </div>
 
       <button type="button" onclick="document.getElementById('AddAddress').style.display='block';" class="btn btn-primary" style="font-size: 11px;">
-        Add a New Address
+        {{ 'customer.addresses.add_new' | t }}
       </button>
     </div>
 
@@ -56,7 +56,7 @@
         <div style="background: #FFF; border-radius: var(--radius-md); border: 1px solid var(--color-beige); padding: 20px; box-shadow: var(--shadow-subtle); display: flex; justify-content: space-between; align-items: flex-start;">
           <div>
             {%- if address == customer.default_address -%}
-              <span class="badge badge-editorial" style="margin-bottom: 6px;">DEFAULT ADDRESS</span>
+              <span class="badge badge-editorial" style="margin-bottom: 6px;">{{ 'customer.addresses.default' | t }}</span>
             {%- endif -%}
             <div style="font-weight: 700; font-size: 14px; color: var(--color-text);">{{ address.name }}</div>
             <div style="font-size: 13px; color: rgba(51,44,40,0.8); line-height: 1.5; margin-top: 4px;">

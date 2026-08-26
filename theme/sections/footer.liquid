@@ -9,7 +9,7 @@
         </div>
         <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text);">100% Hand Crocheted</h4>
         <p style="font-size: 11px; color: rgba(51,44,40,0.7); margin-top: 4px; max-width: 180px;">No machines used. Mindfully crafted stitch by stitch.</p>
-      </div>
+       </div>
 
       <div style="display: flex; flex-direction: column; align-items: center;">
         <div style="width: 44px; height: 44px; border-radius: 50%; background: #F8F4EE; display: flex; align-items: center; justify-content: center; color: #8C6F5A; margin-bottom: 12px; box-shadow: var(--shadow-subtle);">
@@ -33,7 +33,7 @@
         </div>
         <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text);">Natural Pure Yarns</h4>
         <p style="font-size: 11px; color: rgba(51,44,40,0.7); margin-top: 4px; max-width: 180px;">Organic cotton, breathable bamboo & soft milk fibers.</p>
-      </div>
+       </div>
     </div>
 
     <!-- Main Footer Links Grid -->
@@ -65,18 +65,12 @@
       <div>
         <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text); margin-bottom: 16px;">Handmade Drops</h4>
         <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: rgba(51,44,40,0.8);">
-          {%- if linklists.footer.links.size > 0 -%}
-            {%- for link in linklists.footer.links -%}
-              <a href="{{ link.url }}">{{ link.title }}</a>
-            {%- endfor -%}
-          {%- else -%}
             <a href="/collections/tops">Crochet Tops & Vests</a>
             <a href="/collections/bags">Textured Bags & Totes</a>
             <a href="/collections/toys">Amigurumi Heirloom Toys</a>
             <a href="/collections/home-decor">Home Accents & Coasters</a>
             <a href="/collections/gifts">Bespoke Gift Sets</a>
             <a href="/pages/custom-orders" style="color: #8C6F5A; font-weight: 600;">Custom Order Studio</a>
-          {%- endif -%}
         </div>
       </div>
 

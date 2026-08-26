@@ -8,9 +8,9 @@
       <span class="badge badge-editorial" style="margin-bottom: 8px;">STUDIO SEARCH</span>
       <h1 class="heading-serif" style="font-size: clamp(2rem, 4vw, 2.8rem);">
         {%- if search.performed -%}
-          Search results for "{{ search.terms | escape }}"
+          {{ 'general.search.results_with_count.other' | t: count: search.results_count, terms: search.terms }}
         {%- else -%}
-          Search Handcrafted Pieces
+          {{ 'general.search.heading' | t }}
         {%- endif -%}
       </h1>
 
@@ -20,7 +20,7 @@
           type="search"
           name="q"
           value="{{ search.terms | escape }}"
-          placeholder="Search for tops, bags, toys, decor..."
+          placeholder="{{ 'general.search.placeholder' | t }}"
           class="form-input"
           style="padding: 12px 18px 12px 44px; font-size: 15px; border-radius: 999px;"
         >
@@ -32,7 +32,7 @@
 
     {%- if search.performed -%}
       <div style="font-size: 13px; color: rgba(51,44,40,0.7); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--color-beige);">
-        Found <strong>{{ search.results_count }}</strong> items matching your query
+        {{ 'general.search.results_with_count.other' | t: count: search.results_count, terms: search.terms }}
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -42,8 +42,8 @@
           {%- endif -%}
         {%- else -%}
           <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-            <p style="font-size: 15px; color: rgba(51,44,40,0.7); margin-bottom: 20px;">No handcrafted pieces matched your search terms.</p>
-            <a href="/collections/all" class="btn btn-primary">Browse All Collections</a>
+            <p style="font-size: 15px; color: rgba(51,44,40,0.7); margin-bottom: 20px;">{{ 'general.search.no_results' | t }}</p>
+            <a href="/collections/all" class="btn btn-primary">{{ 'general.search.view_all' | t }}</a>
           </div>
         {%- endfor -%}
       </div>
